@@ -125,7 +125,7 @@
 		</ul>
 	}
 
-	@if(isCreatable(User.findByLoginId(session.get("loginId")), project, models.enumeration.ResourceType.BOARD_POST)){
+@if(isProjectResourceCreatable(User.findByLoginId(session.get("loginId")), project, models.enumeration.ResourceType.BOARD_POST)){
 		@form(routes.IssueApp.newComment(project.owner, project.name, issue.id), 'id -> "comment-form", 'enctype -> "multipart/form-data"){
 		<div class="write-comment-box">
 			<div class="write-comment-wrap">
