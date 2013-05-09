@@ -100,7 +100,7 @@
 						<div class="info-wrap">
 							<div class="header">
 								<a href="@routes.UserApp.userInfo(project.owner)">@project.owner</a> / <a href="@routes.ProjectApp.project(project.owner, project.name)" class="project-name">@project.name</a>
-								@if(!project.share_option){ <i class="ico ico-lock"></i> }
+								@if(!project.isPublic){ <i class="ico ico-lock"></i> }
 							</div>
 							<div class="desc">@project.overview</div>
 							<p class="name-tag">
