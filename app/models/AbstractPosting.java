@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Page;
 import controllers.SearchApp;
+import models.enumeration.Operation;
 import models.enumeration.ResourceType;
 import models.resource.Resource;
 import org.joda.time.Duration;
@@ -9,12 +10,16 @@ import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.*;
+import utils.AccessControl;
 import utils.JodaDateUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import javax.xml.stream.util.XMLEventConsumer;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.avaje.ebean.Expr.contains;
 
@@ -58,6 +63,10 @@ abstract public class AbstractPosting extends Model {
     // This field is only for ordering. This field should be persistent because
     // Ebean does NOT sort entities by transient field.
     public int numOfComments;
+
+    abstract protected Set<User> getExplicitWatchers();
+
+    abstract protected Set<User> getExplicitUnwatchers();
 
     /**
      * {@link Comment} 개수를 반환한다.
@@ -206,6 +215,54 @@ abstract public class AbstractPosting extends Model {
      */
     public void updateProperties() {
         // default implementation for convenience
-    };
+    }
 
+    @Transient
+    public Set<User> getWatchers() {
+        return getWatchers(new HashSet<User>());
+    }
+
+    @Transient
+    public Set<User> getWatchers(Set<User> baseWatchers) {
+        Set<User> actualWatchers = new HashSet<>();
+
+        actualWatchers.addAll(baseWatchers);
+
+        actualWatchers.add(User.find.byId(authorId));
+        for (Comment c : getComments()) {
+            User user = User.find.byId(c.authorId);
+            if (user != null) {
+                actualWatchers.add(user);
+            }
+        }
+
+        actualWatchers.addAll(getExplicitWatchers());
+        actualWatchers.removeAll(getExplicitUnwatchers());
+
+        Set<User> allowedWatchers = new HashSet<>();
+        for (User watcher : actualWatchers) {
+            if (AccessControl.isAllowed(watcher, asResource(), Operation.READ)) {
+                allowedWatchers.add(watcher);
+            }
+        }
+
+        play.Logger.debug(getExplicitUnwatchers().toString());
+        play.Logger.debug(actualWatchers.toString());
+
+        return allowedWatchers;
+    }
+
+    @Transactional
+    public void watch(User user) {
+        getExplicitWatchers().add(user);
+        getExplicitUnwatchers().remove(user);
+        update();
+    }
+
+    @Transactional
+    public void unwatch(User user) {
+        getExplicitUnwatchers().add(user);
+        getExplicitWatchers().remove(user);
+        update();
+    }
 }

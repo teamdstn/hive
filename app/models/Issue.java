@@ -10,7 +10,6 @@ import jxl.format.Alignment;
 import jxl.write.*;
 import models.enumeration.*;
 import models.resource.Resource;
-import play.db.ebean.Model;
 import utils.*;
 
 import javax.persistence.*;
@@ -54,7 +53,7 @@ public class Issue extends AbstractPosting {
     @ManyToOne
     public Assignee assignee;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="issue")
     public List<IssueComment> comments;
 
     /**
@@ -98,7 +97,7 @@ public class Issue extends AbstractPosting {
      * 담당자가 지정되어 있다면 {@link Assignee} 정보를 저장한다.
      * @see Assignee#add(Long, Long)
      */
-    private void fetchAssignee() {
+    private void updateAssignee() {
         if (assignee != null && assignee.id == null && assignee.user.id != null) {
             assignee = Assignee.add(assignee.user.id, project.id);
         }
@@ -106,11 +105,11 @@ public class Issue extends AbstractPosting {
 
     /**
      * 수정할 때 담당자 정보를 저장할 수도 있다.
-     * @see #fetchAssignee()
+     * @see #updateAssignee()
      */
     @Transient
     public void update() {
-        fetchAssignee();
+        updateAssignee();
         super.update();
     }
 
@@ -126,11 +125,11 @@ public class Issue extends AbstractPosting {
 
     /**
      * 저장할 때 담당자 정보를 저정할 수도 있다.
-     * @see #fetchAssignee()
+     * @see #updateAssignee()
      */
     @Transient
     public void save() {
-        fetchAssignee();
+        updateAssignee();
         super.save();
     }
 
@@ -293,5 +292,30 @@ public class Issue extends AbstractPosting {
     public static Issue findByNumber(Project project, Long number) {
         return AbstractPosting.findByNumber(finder, project, number);
     }
-}
 
+    @Transient
+    public Set<User> getWatchers() {
+        Set<User> baseWatchers = new HashSet<>();
+        if (assignee != null) {
+            baseWatchers.add(assignee.user);
+        }
+        return super.getWatchers(baseWatchers);
+    }
+
+    @ManyToMany
+    @JoinTable(name="ISSUE_EXPLICIT_WATCHER")
+    private Set<User> explicitWatchers;
+
+    @ManyToMany
+    @JoinTable(name="ISSUE_EXPLICIT_UNWATCHER")
+    private Set<User> explicitUnwatchers;
+
+
+    protected Set<User> getExplicitWatchers() {
+        return explicitWatchers;
+    }
+
+    protected Set<User> getExplicitUnwatchers() {
+        return explicitUnwatchers;
+    }
+}

@@ -108,4 +108,20 @@ public class Posting extends AbstractPosting {
     public static Posting findByNumber(Project project, Long number) {
         return AbstractPosting.findByNumber(finder, project, number);
     }
+
+    @ManyToMany
+    @JoinTable(name="POSTING_EXPLICIT_WATCHER")
+    private Set<User> explicitWatchers;
+
+    @ManyToMany
+    @JoinTable(name="POSTING_EXPLICIT_UNWATCHER")
+    private Set<User> explicitUnwatchers;
+
+    protected Set<User> getExplicitWatchers() {
+        return explicitWatchers;
+    }
+
+    protected Set<User> getExplicitUnwatchers() {
+        return explicitUnwatchers;
+    }
 }
