@@ -87,7 +87,7 @@ public class AbstractPostingApp extends Controller {
         User sender = UserApp.currentUser();
         AbstractPosting parent = comment.getParent();
 
-        Set<User> receivers = comment.getParent().getWatchers();
+        Set<User> receivers = parent.getWatchers();
         receivers.remove(User.find.byId(comment.authorId));
 
         String subject = String.format(
