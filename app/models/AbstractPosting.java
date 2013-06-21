@@ -263,9 +263,6 @@ abstract public class AbstractPosting extends Model {
             }
         }
 
-        play.Logger.debug(getExplicitUnwatchers().toString());
-        play.Logger.debug(actualWatchers.toString());
-
         return allowedWatchers;
     }
 
