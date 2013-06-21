@@ -217,11 +217,28 @@ abstract public class AbstractPosting extends Model {
         // default implementation for convenience
     }
 
+    /**
+     * 지켜보고 있는 모든 사용자들을 얻는다.
+     *
+     * when: 알림 메일을 발송할 때, 지켜보기 버튼을 그릴 때
+     *
+     * @return 이 이슈를 지켜보고 있는 모든 사용자들의 집합
+     * @see {@link #getWatchers()}
+     * @see <a href="https://github.com/nforge/hive/blob/master/docs/technical/watch.md>watch.md</a>
+     */
     @Transient
     public Set<User> getWatchers() {
         return getWatchers(new HashSet<User>());
     }
 
+    /**
+     * 지켜보고 있는 모든 사용자들을 얻는다.
+     *
+     * @param baseWatchers 지켜보고 있는 사용자들이 더 있다면 이 파라메터를 통해 넘겨받는다. e.g. 이슈 담당자
+     * @return
+     * @see {@link #getWatchers()}
+     * @see <a href="https://github.com/nforge/hive/blob/master/docs/technical/watch.md>watch.md</a>
+     */
     @Transient
     public Set<User> getWatchers(Set<User> baseWatchers) {
         Set<User> actualWatchers = new HashSet<>();
@@ -252,6 +269,11 @@ abstract public class AbstractPosting extends Model {
         return allowedWatchers;
     }
 
+    /**
+     * {@code user}가 명시적으로 이 게시물을 지켜보는 것으로 설정한다.
+     *
+     * @param user
+     */
     @Transactional
     public void watch(User user) {
         getExplicitWatchers().add(user);
@@ -259,6 +281,11 @@ abstract public class AbstractPosting extends Model {
         update();
     }
 
+    /**
+     * {@code user}가 명시적으로 이 게시물을 무시하는 것(지켜보지 않는 것)으로 설정한다.
+     *
+     * @param user
+     */
     @Transactional
     public void unwatch(User user) {
         getExplicitUnwatchers().add(user);

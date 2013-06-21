@@ -293,6 +293,11 @@ public class Issue extends AbstractPosting {
         return AbstractPosting.findByNumber(finder, project, number);
     }
 
+    /**
+     * 이 이슈를 지켜보고 있는 모든 사용자들을 얻는다.
+     *
+     * @return 이 이슈를 지켜보고 있는 모든 사용자들의 집합
+     */
     @Transient
     public Set<User> getWatchers() {
         Set<User> baseWatchers = new HashSet<>();
@@ -302,10 +307,16 @@ public class Issue extends AbstractPosting {
         return super.getWatchers(baseWatchers);
     }
 
+    /**
+     * 명시적으로 이 이슈를 지켜보고 있는 사용자들
+     */
     @ManyToMany
     @JoinTable(name="ISSUE_EXPLICIT_WATCHER")
     private Set<User> explicitWatchers;
 
+    /**
+     * 명시적으로 이 이슈를 무시하는(지켜보지 않는) 사용자들
+     */
     @ManyToMany
     @JoinTable(name="ISSUE_EXPLICIT_UNWATCHER")
     private Set<User> explicitUnwatchers;

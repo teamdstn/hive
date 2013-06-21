@@ -83,7 +83,14 @@ public class AbstractPostingApp extends Controller {
         return redirect(toView);
     }
 
-    private static void sendNotification(Comment comment, String referUrl) {
+    /**
+     * 어떤 게시물에 댓글이 달렸을 때, 그 게시물을 지켜보는 사용자들에게 알림 메일을 발송한다.
+     *
+     * @param comment
+     * @param urlToView
+     * @see <a href="https://github.com/nforge/hive/blob/master/docs/technical/watch.md>watch.md</a>
+     */
+    private static void sendNotification(Comment comment, String urlToView) {
         User sender = UserApp.currentUser();
         AbstractPosting parent = comment.getParent();
 
@@ -209,6 +216,12 @@ public class AbstractPostingApp extends Controller {
         return ok(content);
     }
 
+    /**
+     * 현재 사용자가 게시물을 명시적으로 지켜보는 것으로 설정한다.
+     *
+     * @param target
+     * @return
+     */
     public static Result watch(AbstractPosting target) {
         User user = UserApp.currentUser();
 
@@ -225,6 +238,12 @@ public class AbstractPostingApp extends Controller {
         return ok();
     }
 
+    /**
+     * 현재 사용자가 게시물을 명시적으로 무시하는(지켜보지 않는) 것으로 설정한다.
+     *
+     * @param target
+     * @return
+     */
     public static Result unwatch(AbstractPosting target) {
         User user = UserApp.currentUser();
 

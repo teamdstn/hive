@@ -109,10 +109,16 @@ public class Posting extends AbstractPosting {
         return AbstractPosting.findByNumber(finder, project, number);
     }
 
+    /**
+     * 명시적으로 이 게시물을 지켜보고 있는 사용자들
+     */
     @ManyToMany
     @JoinTable(name="POSTING_EXPLICIT_WATCHER")
     private Set<User> explicitWatchers;
 
+    /**
+     * 명시적으로 이 게시물을 무시하는(지켜보지 않는) 사용자들
+     */
     @ManyToMany
     @JoinTable(name="POSTING_EXPLICIT_UNWATCHER")
     private Set<User> explicitUnwatchers;
