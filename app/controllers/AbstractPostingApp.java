@@ -254,4 +254,5 @@ public class AbstractPostingApp extends Controller {
         target.unwatch(user);
 
         return ok();
-    }}
+    }
+}
