@@ -100,7 +100,7 @@ public class AbstractPostingApp extends Controller {
         String subject = String.format(
                 "Re: [%s] %s (#%d)",
                 parent.project.name, parent.title, parent.getNumber());
-        String urlToComment = referUrl + "#comment-" + comment.id;
+        String urlToComment = urlToView + "#comment-" + comment.id;
         String htmlMessage = String.format(
                 "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
                 comment.contents, urlToComment, "View it on HIVE");
