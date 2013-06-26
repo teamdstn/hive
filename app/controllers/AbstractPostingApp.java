@@ -52,6 +52,13 @@ public class AbstractPostingApp extends Controller {
         }
     }
 
+    protected static interface Notification {
+        public String getTitle();
+        public String getHtmlMessage();
+        public String getPlainMessage();
+        public Set<User> getReceivers();
+    }
+
     /**
      * 새 댓글 저장 핸들러
      *
@@ -78,50 +85,62 @@ public class AbstractPostingApp extends Controller {
         // Attach all of the files in the current user's temporary storage.
         Attachment.moveAll(UserApp.currentUser().asResource(), comment.asResource());
 
-        try {
-            sendNotification(comment, toView.absoluteURL(request()));
-        } catch (Exception e) {
-            Logger.warn("Failed to send a notification: " + ExceptionUtils.getStackTrace(e));
-        }
+        final AbstractPosting post = comment.getParent();
+        final String urlToView = toView.absoluteURL(request());
+
+        Notification noti = new Notification() {
+            public String getTitle() {
+                return String.format(
+                        "Re: [%s] %s (#%d)",
+                        post.project.name, post.title, post.getNumber());
+            }
+
+            public String getHtmlMessage() {
+                return String.format(
+                        "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
+                        comment.contents, urlToView, "View it on HIVE");
+            }
+
+            public String getPlainMessage() {
+                return String.format(
+                        "%s\n\n--\nView it on %s",
+                        comment.contents, urlToView);
+            }
+
+            public Set<User> getReceivers() {
+                Set<User> receivers = post.getWatchers();
+                receivers.remove(User.find.byId(comment.authorId));
+
+                return receivers;
+            }
+        };
+
+        sendNotification(noti);
 
         return redirect(toView);
     }
 
     /**
-     * 어떤 게시물에 댓글이 달렸을 때, 그 게시물을 지켜보는 사용자들에게 알림 메일을 발송한다.
+     * 어떤 게시물이 등록되었을 때, 그 프로젝틑 지켜보는 사용자들에게 알림 메일을 발송한다.
      *
-     * @param comment
+     * @param posting
      * @param urlToView
      * @see <a href="https://github.com/nforge/hive/blob/master/docs/technical/watch.md>watch.md</a>
      */
-    private static void sendNotification(Comment comment, String urlToView) {
-        User sender = UserApp.currentUser();
-        AbstractPosting parent = comment.getParent();
-
-        Set<User> receivers = parent.getWatchers();
-        receivers.remove(User.find.byId(comment.authorId));
-
-        String subject = String.format(
-                "Re: [%s] %s (#%d)",
-                parent.project.name, parent.title, parent.getNumber());
-        String urlToComment = urlToView + "#comment-" + comment.id;
-        String htmlMessage = String.format(
-                "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
-                comment.contents, urlToComment, "View it on HIVE");
-        String plainMessage = String.format(
-                "%s\n\n--\nView it on %s",
-                comment.contents, urlToComment);
-
+    protected static void sendNotification(Notification noti) {
         final HtmlEmail email = new HtmlEmail();
 
         try {
+            User sender = UserApp.currentUser();
             email.setFrom(sender.email, sender.name);
-            for (User receiver : receivers) {
-                email.addTo(receiver.email, receiver.name);
+            play.Configuration config = play.Configuration.root();
+            email.addTo(config.getString("smtp.user") + "@" + config.getString("smtp.domain"));
+            for (User receiver : noti.getReceivers()) {
+                email.addBcc(receiver.email, receiver.name);
             }
-            email.setSubject(subject);
-            email.setHtmlMsg(htmlMessage);
-            email.setTextMsg(plainMessage);
+            email.setSubject(noti.getTitle());
+            email.setHtmlMsg(noti.getHtmlMessage());
+            email.setTextMsg(noti.getPlainMessage());
             email.setCharset("utf-8");
         } catch (Exception e) {
             Logger.warn("Failed to send a notification: "
