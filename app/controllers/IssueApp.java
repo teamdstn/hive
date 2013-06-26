@@ -350,7 +350,7 @@ public class IssueApp extends AbstractPostingApp {
             return badRequest(create.render(issueForm.errors().toString(), issueForm, project));
         }
 
-        Issue newIssue = issueForm.get();
+        final Issue newIssue = issueForm.get();
         newIssue.createdDate = JodaDateUtil.now();
         newIssue.setAuthor(UserApp.currentUser());
         newIssue.project = project;
@@ -365,7 +365,38 @@ public class IssueApp extends AbstractPostingApp {
         // Attach all of the files in the current user's temporary storage.
         Attachment.moveAll(UserApp.currentUser().asResource(), newIssue.asResource());
 
-        return redirect(routes.IssueApp.issue(project.owner, project.name, newIssue.getNumber()));
+        play.api.mvc.Call issueCall = routes.IssueApp.issue(project.owner, project.name, newIssue.getNumber());
+        final String urlToView = issueCall.absoluteURL(request());
+
+        Notification noti = new Notification() {
+            public String getTitle() {
+                return String.format(
+                        "[%s] %s (#%d)",
+                        newIssue.project.name, newIssue.title, newIssue.getNumber());
+            }
+
+            public String getHtmlMessage() {
+                return String.format(
+                        "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
+                        newIssue.body, urlToView, "View it on HIVE");
+            }
+
+            public String getPlainMessage() {
+                return String.format(
+                        "%s\n\n--\nView it on %s",
+                        newIssue.body, urlToView);
+            }
+
+            public Set<User> getReceivers() {
+                Set<User> receivers = newIssue.getWatchers();
+                receivers.remove(User.find.byId(newIssue.authorId));
+                return receivers;
+            }
+        };
+
+        sendNotification(noti);
+
+        return redirect(issueCall);
     }
 
     /**
