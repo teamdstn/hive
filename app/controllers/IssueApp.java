@@ -3,15 +3,12 @@ package controllers;
 import models.*;
 import models.enumeration.*;
 
-import play.Logger;
-import play.data.DynamicForm;
+import org.apache.commons.lang.StringUtils;
 import play.mvc.Http;
 import views.html.issue.edit;
 import views.html.issue.view;
 import views.html.issue.list;
 import views.html.issue.create;
-import views.html.error.notfound;
-import views.html.error.forbidden;
 
 import utils.AccessControl;
 import utils.Callback;
@@ -27,11 +24,8 @@ import org.apache.tika.Tika;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.ExpressionList;
 
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -441,7 +435,7 @@ public class IssueApp extends AbstractPostingApp {
      * @param number 이슈 번호
      * @return
      * @throws IOException
-     * @see {@link AbstractPostingApp#editPosting(AbstractPosting, AbstractPosting, Form, Call, Callback)}
+     * @see {@link AbstractPostingApp#editPosting(models.AbstractPosting, models.AbstractPosting, play.data.Form}
      */
     public static Result editIssue(String ownerName, String projectName, Long number) throws IOException {
         Form<Issue> issueForm = new Form<Issue>(Issue.class).bindFromRequest();
@@ -453,6 +447,19 @@ public class IssueApp extends AbstractPostingApp {
             return notFound();
         }
         final Issue originalIssue = Issue.findByNumber(project, number);
+
+        boolean assigneeChangedToNonAnonymous = false;
+        boolean stateChanged = false;
+        if(issue.assignee != null && issue.assignee != originalIssue.assignee) {
+            if(originalIssue.assignee != null) {
+                assigneeChangedToNonAnonymous = issue.assignee.user.loginId == originalIssue.assignee.user.loginId;
+            } else {
+                assigneeChangedToNonAnonymous = true;
+            }
+        }
+        if(issue.state != originalIssue.state) {
+            stateChanged = true;
+        }
 
         Call redirectTo = routes.IssueApp.issue(project.owner, project.name, number);
 
@@ -466,7 +473,68 @@ public class IssueApp extends AbstractPostingApp {
             }
         };
 
-        return editPosting(originalIssue, issue, issueForm, redirectTo, updateIssueBeforeSave);
+
+        Notification noti = null;
+        if(assigneeChangedToNonAnonymous || stateChanged) {
+            final String urlToView = redirectTo.absoluteURL(request());
+
+            final boolean finalAssigneeChangedToNonAnonymous = assigneeChangedToNonAnonymous;
+            final boolean finalStateChanged = stateChanged;
+
+            noti = new Notification() {
+                public String getTitle() {
+                    Issue updatedIssue = getIsseue();
+                    return String.format(
+                            "[%s] %s (#%d)",
+                            updatedIssue.project.name, updatedIssue.title, updatedIssue.getNumber());
+                }
+
+                public String getHtmlMessage() {
+                    return String.format(
+                            "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
+                            getMessage(), urlToView, "View it on HIVE");
+                }
+
+                public String getPlainMessage() {
+                    return String.format(
+                            "%s\n\n--\nView it on %s",
+                            getMessage(), urlToView);
+                }
+
+                public Set<User> getReceivers() {
+                    Set<User> receivers = issue.getWatchers();
+                    Assignee assignee = originalIssue.assignee;
+                    if(assignee != null) {
+                        receivers.add(assignee.user);
+                    }
+                    return receivers;
+                }
+
+                private Issue getIsseue(){
+                    return Issue.finder.byId(issue.id);
+                }
+
+                private String getMessage(){
+                    List<String> messages = new ArrayList<>();
+
+                    if(finalAssigneeChangedToNonAnonymous) {
+                        messages.add("Assigned to " + getIsseue().assignee.user.loginId);
+                    }
+
+                    if(finalStateChanged) {
+                        if(getIsseue().state == State.CLOSED) {
+                            messages.add("Closed");
+                        } else {
+                            messages.add("Re-opened");
+                        }
+                    }
+
+                    return StringUtils.join(messages, "\n\n");
+                }
+            };
+        }
+
+        return editPosting(originalIssue, issue, issueForm, redirectTo, updateIssueBeforeSave, noti);
     }
 
     /*
