@@ -359,30 +359,27 @@ public class IssueApp extends AbstractPostingApp {
         // Attach all of the files in the current user's temporary storage.
         Attachment.moveAll(UserApp.currentUser().asResource(), newIssue.asResource());
 
-        play.api.mvc.Call issueCall = routes.IssueApp.issue(project.owner, project.name, newIssue.getNumber());
-        final String urlToView = issueCall.absoluteURL(request());
+        final Call issueCall = routes.IssueApp.issue(project.owner, project.name, newIssue.getNumber());
 
-        Notification noti = new Notification() {
+        Notification noti = new AbstractNotification() {
             public String getTitle() {
                 return String.format(
                         "[%s] %s (#%d)",
                         newIssue.project.name, newIssue.title, newIssue.getNumber());
             }
 
-            public String getHtmlMessage() {
-                return String.format(
-                        "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
-                        newIssue.body, urlToView, "View it on HIVE");
-            }
-
-            public String getPlainMessage() {
-                return String.format(
-                        "%s\n\n--\nView it on %s",
-                        newIssue.body, urlToView);
-            }
-
             public Set<User> getReceivers() {
                 return newIssue.getWatchers();
+            }
+
+            @Override
+            public String getMessage() {
+                return newIssue.body;
+            }
+
+            @Override
+            public String getUrlToView() {
+                return issueCall.absoluteURL(request());
             }
         };
 
@@ -459,7 +456,7 @@ public class IssueApp extends AbstractPostingApp {
             stateChanged = true;
         }
 
-        Call redirectTo = routes.IssueApp.issue(project.owner, project.name, number);
+        final Call redirectTo = routes.IssueApp.issue(project.owner, project.name, number);
 
         // updateIssueBeforeSave.run would be called just before this issue is saved.
         // It updates some properties only for issues, such as assignee or labels, but not for non-issues.
@@ -471,32 +468,17 @@ public class IssueApp extends AbstractPostingApp {
             }
         };
 
-
         Notification noti = null;
         if(assigneeChangedToNonAnonymous || stateChanged) {
-            final String urlToView = redirectTo.absoluteURL(request());
-
             final boolean finalAssigneeChangedToNonAnonymous = assigneeChangedToNonAnonymous;
             final boolean finalStateChanged = stateChanged;
 
-            noti = new Notification() {
+            noti = new AbstractNotification() {
                 public String getTitle() {
                     Issue updatedIssue = getIsseue();
                     return String.format(
                             "[%s] %s (#%d)",
                             updatedIssue.project.name, updatedIssue.title, updatedIssue.getNumber());
-                }
-
-                public String getHtmlMessage() {
-                    return String.format(
-                            "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
-                            getMessage(), urlToView, "View it on HIVE");
-                }
-
-                public String getPlainMessage() {
-                    return String.format(
-                            "%s\n\n--\nView it on %s",
-                            getMessage(), urlToView);
                 }
 
                 public Set<User> getReceivers() {
@@ -512,7 +494,7 @@ public class IssueApp extends AbstractPostingApp {
                     return Issue.finder.byId(issue.id);
                 }
 
-                private String getMessage(){
+                public String getMessage(){
                     List<String> messages = new ArrayList<>();
 
                     if(finalAssigneeChangedToNonAnonymous) {
@@ -528,6 +510,11 @@ public class IssueApp extends AbstractPostingApp {
                     }
 
                     return StringUtils.join(messages, "\n\n");
+                }
+
+                @Override
+                public String getUrlToView() {
+                    return redirectTo.absoluteURL(request());
                 }
             };
         }

@@ -142,27 +142,25 @@ public class BoardApp extends AbstractPostingApp {
 
         final String urlToView = toPost.absoluteURL(request());
 
-        Notification noti = new Notification() {
+        Notification noti = new AbstractNotification() {
             public String getTitle() {
                 return String.format(
                         "[%s] %s (#%d)",
                         post.project.name, post.title, post.getNumber());
             }
 
-            public String getHtmlMessage() {
-                return String.format(
-                        "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
-                        post.body, urlToView, "View it on HIVE");
-            }
-
-            public String getPlainMessage() {
-                return String.format(
-                        "%s\n\n--\nView it on %s",
-                        post.body, urlToView);
-            }
-
             public Set<User> getReceivers() {
                 return post.getWatchers();
+            }
+
+            @Override
+            public String getMessage() {
+                return post.body;
+            }
+
+            @Override
+            public String getUrlToView() {
+                return urlToView;
             }
         };
 

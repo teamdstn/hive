@@ -57,6 +57,24 @@ public class AbstractPostingApp extends Controller {
         public String getHtmlMessage();
         public String getPlainMessage();
         public Set<User> getReceivers();
+        public String getMessage();
+        public String getUrlToView();
+    }
+
+    protected static abstract class AbstractNotification implements Notification {
+
+        public String getHtmlMessage() {
+            return String.format(
+                    "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
+                    getMessage(), getUrlToView(), "View it on HIVE");
+        }
+
+        public String getPlainMessage() {
+            return String.format(
+                    "%s\n\n--\nView it on %s",
+                    getMessage(), getUrlToView());
+        }
+
     }
 
     /**
@@ -86,29 +104,25 @@ public class AbstractPostingApp extends Controller {
         Attachment.moveAll(UserApp.currentUser().asResource(), comment.asResource());
 
         final AbstractPosting post = comment.getParent();
-        final String urlToView = toView.absoluteURL(request());
-
-        Notification noti = new Notification() {
+        Notification noti = new AbstractNotification() {
             public String getTitle() {
                 return String.format(
                         "Re: [%s] %s (#%d)",
                         post.project.name, post.title, post.getNumber());
             }
 
-            public String getHtmlMessage() {
-                return String.format(
-                        "<pre>%s</pre><hr><a href=\"%s\">%s</a>",
-                        comment.contents, urlToView, "View it on HIVE");
-            }
-
-            public String getPlainMessage() {
-                return String.format(
-                        "%s\n\n--\nView it on %s",
-                        comment.contents, urlToView);
-            }
-
             public Set<User> getReceivers() {
                 return post.getWatchers();
+            }
+
+            @Override
+            public String getMessage() {
+                return comment.contents;
+            }
+
+            @Override
+            public String getUrlToView() {
+                return toView.absoluteURL(request());
             }
         };
 
@@ -120,8 +134,7 @@ public class AbstractPostingApp extends Controller {
     /**
      * 어떤 게시물이 등록되었을 때, 그 프로젝틑 지켜보는 사용자들에게 알림 메일을 발송한다.
      *
-     * @param posting
-     * @param urlToView
+     * @param noti
      * @see <a href="https://github.com/nforge/hive/blob/master/docs/technical/watch.md>watch.md</a>
      */
     protected static void sendNotification(Notification noti) {
