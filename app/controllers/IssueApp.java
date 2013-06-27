@@ -4,6 +4,7 @@ import models.*;
 import models.enumeration.*;
 
 import org.apache.commons.lang.StringUtils;
+import play.Logger;
 import play.mvc.Http;
 import views.html.issue.edit;
 import views.html.issue.view;
@@ -361,27 +362,9 @@ public class IssueApp extends AbstractPostingApp {
 
         final Call issueCall = routes.IssueApp.issue(project.owner, project.name, newIssue.getNumber());
 
-        Notification noti = new AbstractNotification() {
-            public String getTitle() {
-                return String.format(
-                        "[%s] %s (#%d)",
-                        newIssue.project.name, newIssue.title, newIssue.getNumber());
-            }
-
-            public Set<User> getReceivers() {
-                return newIssue.getWatchers();
-            }
-
-            @Override
-            public String getMessage() {
-                return newIssue.body;
-            }
-
-            @Override
-            public String getUrlToView() {
-                return issueCall.absoluteURL(request());
-            }
-        };
+        String title = String.format("[%s] %s (#%d)", newIssue.project.name, newIssue.title, newIssue.getNumber());
+        Notification noti = NotificationFactory
+                .create(newIssue.getWatchers(), title, newIssue.body, issueCall.absoluteURL(request()));
 
         sendNotification(noti);
 
@@ -447,7 +430,7 @@ public class IssueApp extends AbstractPostingApp {
         boolean stateChanged = false;
         if(issue.assignee != null && issue.assignee != originalIssue.assignee) {
             if(originalIssue.assignee != null) {
-                assigneeChangedToNonAnonymous = issue.assignee.user.loginId == originalIssue.assignee.user.loginId;
+                assigneeChangedToNonAnonymous = issue.assignee.user.id == originalIssue.assignee.user.id;
             } else {
                 assigneeChangedToNonAnonymous = true;
             }
@@ -470,57 +453,37 @@ public class IssueApp extends AbstractPostingApp {
 
         Notification noti = null;
         if(assigneeChangedToNonAnonymous || stateChanged) {
-            final boolean finalAssigneeChangedToNonAnonymous = assigneeChangedToNonAnonymous;
-            final boolean finalStateChanged = stateChanged;
+            Issue updatedIssue = Issue.finder.byId(originalIssue.id);
+            User newAssignee = User.find.byId(issue.assignee.user.id);
 
-            noti = new AbstractNotification() {
-                public String getTitle() {
-                    Issue updatedIssue = getIsseue();
-                    return String.format(
-                            "[%s] %s (#%d)",
-                            updatedIssue.project.name, updatedIssue.title, updatedIssue.getNumber());
+            Set<User> receivers = updatedIssue.getWatchers();
+            Assignee assignee = originalIssue.assignee;
+            if(assignee != null) {
+                receivers.add(assignee.user);
+            }
+
+            String title = String.format("[%s] %s (#%d)", updatedIssue.project.name, updatedIssue.title, updatedIssue.getNumber());
+
+            List<String> messages = new ArrayList<>();
+            if(assigneeChangedToNonAnonymous) {
+                messages.add("Assigned to " + newAssignee.loginId);
+            }
+
+            if(stateChanged) {
+                if(updatedIssue.state == State.CLOSED) {
+                    messages.add("Closed");
+                } else {
+                    messages.add("Re-opened");
                 }
+            }
+            String message = StringUtils.join(messages, "\n\n");
 
-                public Set<User> getReceivers() {
-                    Set<User> receivers = issue.getWatchers();
-                    Assignee assignee = originalIssue.assignee;
-                    if(assignee != null) {
-                        receivers.add(assignee.user);
-                    }
-                    return receivers;
-                }
-
-                private Issue getIsseue(){
-                    return Issue.finder.byId(issue.id);
-                }
-
-                public String getMessage(){
-                    List<String> messages = new ArrayList<>();
-
-                    if(finalAssigneeChangedToNonAnonymous) {
-                        messages.add("Assigned to " + getIsseue().assignee.user.loginId);
-                    }
-
-                    if(finalStateChanged) {
-                        if(getIsseue().state == State.CLOSED) {
-                            messages.add("Closed");
-                        } else {
-                            messages.add("Re-opened");
-                        }
-                    }
-
-                    return StringUtils.join(messages, "\n\n");
-                }
-
-                @Override
-                public String getUrlToView() {
-                    return redirectTo.absoluteURL(request());
-                }
-            };
+            noti = NotificationFactory.create(receivers, title, message, redirectTo.absoluteURL(request()));
         }
 
         return editPosting(originalIssue, issue, issueForm, redirectTo, updateIssueBeforeSave, noti);
     }
+
 
     /*
      * form 에서 전달받은 마일스톤ID를 이용해서 이슈객체에 마일스톤 객체를 set한다
