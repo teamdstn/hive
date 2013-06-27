@@ -162,10 +162,7 @@ public class BoardApp extends AbstractPostingApp {
             }
 
             public Set<User> getReceivers() {
-                Set<User> receivers = post.getWatchers();
-                receivers.remove(User.find.byId(post.authorId));
-
-                return receivers;
+                return post.getWatchers();
             }
         };
 

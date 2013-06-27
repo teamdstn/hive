@@ -382,9 +382,7 @@ public class IssueApp extends AbstractPostingApp {
             }
 
             public Set<User> getReceivers() {
-                Set<User> receivers = newIssue.getWatchers();
-                receivers.remove(User.find.byId(newIssue.authorId));
-                return receivers;
+                return newIssue.getWatchers();
             }
         };
 
@@ -435,7 +433,7 @@ public class IssueApp extends AbstractPostingApp {
      * @param number 이슈 번호
      * @return
      * @throws IOException
-     * @see {@link AbstractPostingApp#editPosting(models.AbstractPosting, models.AbstractPosting, play.data.Form}
+     * @see {@link AbstractPostingApp#editPosting(models.AbstractPosting, models.AbstractPosting, play.data.Form, play.mvc.Call, utils.Callback, controllers.AbstractPostingApp.Notification)}
      */
     public static Result editIssue(String ownerName, String projectName, Long number) throws IOException {
         Form<Issue> issueForm = new Form<Issue>(Issue.class).bindFromRequest();
