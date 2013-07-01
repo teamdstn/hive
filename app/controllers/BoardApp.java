@@ -20,7 +20,6 @@ import play.mvc.Result;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import static com.avaje.ebean.Expr.icontains;
 
@@ -243,7 +242,7 @@ public class BoardApp extends AbstractPostingApp {
             }
         };
 
-        return editPosting(original, post, postForm, redirectTo, updatePostingBeforeUpdate, null);
+        return editPosting(original, post, postForm, redirectTo, updatePostingBeforeUpdate);
     }
 
     /**

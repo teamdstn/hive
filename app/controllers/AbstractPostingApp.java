@@ -148,6 +148,7 @@ public class AbstractPostingApp extends Controller {
             play.Configuration config = play.Configuration.root();
             email.addTo(config.getString("smtp.user") + "@" + config.getString("smtp.domain"));
             Set<User> receivers = noti.getReceivers();
+            receivers.remove(UserApp.currentUser());
             if(receivers.isEmpty()) {
                 return;
             }
@@ -207,15 +208,15 @@ public class AbstractPostingApp extends Controller {
      *
      * 게시물이나 이슈가 수정될 때 {@code noti} 객체가 null이 아니면 알림을 발송한다.
      *
+     *
      * @param original
      * @param posting
      * @param postingForm
      * @param redirectTo
      * @param updatePosting
-     * @param noti
      * @return
      */
-    protected static Result editPosting(AbstractPosting original, AbstractPosting posting, Form<? extends AbstractPosting> postingForm, Call redirectTo, Callback updatePosting, Notification noti) {
+    protected static Result editPosting(AbstractPosting original, AbstractPosting posting, Form<? extends AbstractPosting> postingForm, Call redirectTo, Callback updatePosting) {
         if (postingForm.hasErrors()) {
             return badRequest(postingForm.errors().toString());
         }
@@ -236,10 +237,6 @@ public class AbstractPostingApp extends Controller {
 
         // Attach the files in the current user's temporary storage.
         Attachment.moveAll(UserApp.currentUser().asResource(), original.asResource());
-
-        if(noti != null) {
-            sendNotification(noti);
-        }
 
         return redirect(redirectTo);
     }

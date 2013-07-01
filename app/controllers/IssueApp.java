@@ -4,7 +4,6 @@ import models.*;
 import models.enumeration.*;
 
 import org.apache.commons.lang.StringUtils;
-import play.Logger;
 import play.mvc.Http;
 import views.html.issue.edit;
 import views.html.issue.view;
@@ -413,7 +412,7 @@ public class IssueApp extends AbstractPostingApp {
      * @param number 이슈 번호
      * @return
      * @throws IOException
-     * @see {@link AbstractPostingApp#editPosting(models.AbstractPosting, models.AbstractPosting, play.data.Form, play.mvc.Call, utils.Callback, controllers.AbstractPostingApp.Notification)}
+     * @see {@link AbstractPostingApp#editPosting(models.AbstractPosting, models.AbstractPosting, play.data.Form}
      */
     public static Result editIssue(String ownerName, String projectName, Long number) throws IOException {
         Form<Issue> issueForm = new Form<Issue>(Issue.class).bindFromRequest();
@@ -426,15 +425,14 @@ public class IssueApp extends AbstractPostingApp {
         }
         final Issue originalIssue = Issue.findByNumber(project, number);
 
-        boolean assigneeChangedToNonAnonymous = false;
         boolean stateChanged = false;
-        if(issue.assignee != null && issue.assignee != originalIssue.assignee) {
-            if(originalIssue.assignee != null) {
-                assigneeChangedToNonAnonymous = issue.assignee.user.id == originalIssue.assignee.user.id;
-            } else {
-                assigneeChangedToNonAnonymous = true;
-            }
-        }
+
+        boolean assigneeChanged =
+                ((issue.assignee != null && originalIssue.assignee != null) && (issue.assignee.id
+                        != originalIssue.assignee.id))
+                || ((issue.assignee != originalIssue.assignee) && (issue.assignee == null ||
+                        originalIssue.assignee == null));
+
         if(issue.state != originalIssue.state) {
             stateChanged = true;
         }
@@ -451,10 +449,10 @@ public class IssueApp extends AbstractPostingApp {
             }
         };
 
-        Notification noti = null;
-        if(assigneeChangedToNonAnonymous || stateChanged) {
+        Result result = editPosting(originalIssue, issue, issueForm, redirectTo, updateIssueBeforeSave);
+
+        if(assigneeChanged) {
             Issue updatedIssue = Issue.finder.byId(originalIssue.id);
-            User newAssignee = User.find.byId(issue.assignee.user.id);
 
             Set<User> receivers = updatedIssue.getWatchers();
             Assignee assignee = originalIssue.assignee;
@@ -464,24 +462,37 @@ public class IssueApp extends AbstractPostingApp {
 
             String title = String.format("[%s] %s (#%d)", updatedIssue.project.name, updatedIssue.title, updatedIssue.getNumber());
 
-            List<String> messages = new ArrayList<>();
-            if(assigneeChangedToNonAnonymous) {
-                messages.add("Assigned to " + newAssignee.loginId);
+            String message;
+            if (updatedIssue.assignee == null) {
+                message = "Unassigned";
+            } else {
+                User newAssignee = User.find.byId(updatedIssue.assignee.user.id);
+                message = "Assigned to " + newAssignee.loginId;
             }
 
-            if(stateChanged) {
-                if(updatedIssue.state == State.CLOSED) {
-                    messages.add("Closed");
-                } else {
-                    messages.add("Re-opened");
-                }
-            }
-            String message = StringUtils.join(messages, "\n\n");
-
-            noti = NotificationFactory.create(receivers, title, message, redirectTo.absoluteURL(request()));
+            sendNotification(NotificationFactory.create(receivers, title, message,
+                    redirectTo.absoluteURL(request())));
         }
 
-        return editPosting(originalIssue, issue, issueForm, redirectTo, updateIssueBeforeSave, noti);
+        if(stateChanged) {
+            Issue updatedIssue = Issue.finder.byId(originalIssue.id);
+
+            Set<User> receivers = updatedIssue.getWatchers();
+
+            String title = String.format("[%s] %s (#%d)", updatedIssue.project.name, updatedIssue.title, updatedIssue.getNumber());
+
+            String message;
+            if(updatedIssue.state == State.CLOSED) {
+                message = "Closed";
+            } else {
+                message = "Re-opened";
+            }
+
+            sendNotification(NotificationFactory.create(receivers, title, message,
+                    redirectTo.absoluteURL(request())));
+        }
+
+        return result;
     }
 
 
