@@ -26,10 +26,9 @@ import com.avaje.ebean.ExpressionList;
 
 import javax.persistence.Transient;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.avaje.ebean.Expr.icontains;
 import static play.data.Form.form;
@@ -381,12 +380,24 @@ public class IssueApp extends AbstractPostingApp {
         final Call issueCall = routes.IssueApp.issue(project.owner, project.name, newIssue.getNumber());
 
         String title = String.format("[%s] %s (#%d)", newIssue.project.name, newIssue.title, newIssue.getNumber());
+        Set<User> watchers = newIssue.getWatchers();
+        watchers.addAll(getMentionedUsers(newIssue.body));
         Notification noti = NotificationFactory
-                .create(newIssue.getWatchers(), title, newIssue.body, issueCall.absoluteURL(request()));
+                .create(watchers, title, newIssue.body, issueCall.absoluteURL(request()));
 
         sendNotification(noti);
 
         return redirect(issueCall);
+    }
+
+    private static Set<User> getMentionedUsers(String body) {
+        Matcher matcher = Pattern.compile("@" + User.LOGIN_ID_PATTERN).matcher(body);
+        Set<User> users = new HashSet<>();
+        while(matcher.find()) {
+            users.add(User.findByLoginId(matcher.group().substring(1)));
+        }
+        users.remove(User.anonymous);
+        return users;
     }
 
     /**
