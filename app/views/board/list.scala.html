@@ -17,8 +17,9 @@
 }
 
 @main(title, project, utils.MenuType.BOARD) {
+@prjmenu(project, utils.MenuType.BOARD, "main-menu-only")
 <div class="page">
-	@prjmenu(project, utils.MenuType.BOARD, "main-menu-only")
+
 
 	<div class="header-wrap">
 	    <div class="search-wrap board">
@@ -29,7 +30,7 @@
 	          <input name="filter" class="text" type="text" placeholder="@Messages("project.searchPlaceholder")" value="@param.filter">
 	          <button type="submit" class="nbtn medium">@Messages("post.menu.search")</button>
 	        </form>
-	        <div class="actrow"> 
+	        <div class="actrow">
                 <a href="@routes.BoardApp.newPostForm(project.owner, project.name)" class="nbtn orange medium last">@Messages("post.write")</a>
             </div>
 	    </div>
@@ -77,7 +78,7 @@
 	<div id="pagination">
 		<!-- pagination.js will fill here. -->
 	</div>
-	
+
     @help.keymap("boardList", project)
 </div>
 
@@ -87,7 +88,7 @@
 			"elPagination": $('#pagination'),
 			"nTotalPages" : @page.getTotalPageCount
 		});
-		
+
 		hive.ShortcutKey.setKeymapLink({
 		   "N": "@routes.BoardApp.newPostForm(project.owner, project.name)"
 		   @if(page.getPageIndex > 0){

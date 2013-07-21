@@ -12,8 +12,9 @@
 }
 
 @main(title, project, utils.MenuType.MILESTONE) {
+@prjmenu(project, utils.MenuType.MILESTONE, "")
 <div class="page">
-	@prjmenu(project, utils.MenuType.MILESTONE, "")
+
     <h3>
         <a href="@routes.MilestoneApp.milestone(project.owner, project.name, milestone.id)" class="title">@milestone.title</a>
         <small>
@@ -43,7 +44,7 @@
 
     <div class="issues">
         <h5 class="margin-bottom-20">@Messages("menu.issue") <strong class="num-badge">@milestone.issues.size</strong></h5>
-        
+
         @issue.partial_massupdate(project, IssueApp.SearchCondition.emptySearchCondition)
         @issue.partial_list(project,milestone.sortedByStateOfIssue(),IssueApp.SearchCondition.emptySearchCondition,0,0)
     </div>
@@ -52,7 +53,7 @@
         @if(isAllowed(UserApp.currentUser(), milestone.asResource(), Operation.DELETE)){
         <a href="@routes.MilestoneApp.deleteMilestone(project.owner, project.name, milestone.id)" class="nbtn medium red pull-left">@Messages("milestone.delete")</a>
         }
-        
+
         @if(isAllowed(UserApp.currentUser(), milestone.asResource(), Operation.UPDATE)){
             @if(milestone.state == State.OPEN) {
                 <a href="@routes.MilestoneApp.close(project.owner, project.name, milestone.id)" class="nbtn medium blue">@Messages("milestone.close")</a>

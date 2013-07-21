@@ -26,13 +26,14 @@
 @getTabLinkByState(state:State) = {@routes.IssueApp.issues(project.owner, project.name, state.state)@if(param.assigneeId != null){&assigneeId=@param.assigneeId}@if(param.authorLoginId != null){&authorLoginId=@param.authorLoginId}@if(param.milestoneId != null){&milestoneId=@param.milestoneId}}
 
 @main(Messages(title), project, utils.MenuType.ISSUE){
+@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
 <div class="page">
-	@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
+
 
 	<div class="pull-right">
         <a href="@routes.IssueApp.newIssueForm(project.owner, project.name)" class="nbtn medium orange last">@Messages("issue.menu.new")</a>
     </div>
-    
+
 	<ul class="nav nav-tabs nm">
     @for(state <- Array(State.ALL, State.OPEN, State.CLOSED)) {
         <li @if(param.state == state.state) { class="active" }>
@@ -51,7 +52,7 @@
                 @if(ProjectUser.isMember(UserApp.currentUser().id, project.id)){
                     @partial_massupdate(project, param)
                 }
-                
+
                 @if(currentPage.getList().size() > 1){
         		<div class="filters pull-right">
         			@makeFilterLink("state", param.orderBy, param.orderDir, Messages("order.state"))
@@ -62,8 +63,8 @@
         	</div>
 
             @partial_list(project, currentPage.getList, param, currentPage.getPageIndex, currentPage.getTotalPageCount)
-            
-            <div id="pagination"><!-- pagination.js will fill here. --></div>          
+
+            <div id="pagination"><!-- pagination.js will fill here. --></div>
         } else {
             <div class="error-wrap">
                 <i class="ico ico-err1"></i>
@@ -71,7 +72,7 @@
             </div>
         }
         </div>
-        
+
         <div class="span3 search-wrap">
             <div class="inner bggray @if(param.authorLoginId != null || param.assigneeId != null || param.milestoneId != null){ advanced }">
                 <ul class="unstyled preset-list">
@@ -93,7 +94,7 @@
                 <form id="search" action="@routes.IssueApp.issues(project.owner, project.name, param.state)" method="get">
                     <input type="hidden" name="orderBy" value="@param.orderBy" class="h-value order">
                     <input type="hidden" name="state"   value="@param.state">
-                    
+
                     <div class="row-fluid">
                         <div class="span10">
                             <input type="text" name="filter" class="text" placeholder="@Messages("project.searchPlaceholder")" value="@param.filter">
@@ -127,7 +128,7 @@
                                         <li data-value="@assignee.user.id" @if(param.assigneeId != null && param.assigneeId == assignee.user.id){data-selected="true" class="active"}><a>@assignee.user.name (@assignee.user.loginId)</a></li>
                                         }
                                     </ul>
-                                </div>                                
+                                </div>
                             </dd>
                         </dl>
                         <dl class="issue-option">
@@ -145,7 +146,7 @@
                                         <li data-value="@milestone.id" @if(param.milestoneId != null && param.milestoneId == milestone.id){data-selected="true" class="active"}><a>@milestone.title</a></li>
                                         }
                                     </ul>
-                                </div>                                
+                                </div>
                             </dd>
                         </dl>
                     </div>

@@ -1,8 +1,9 @@
 @(project: Project, pullRequests: List[PullRequest], requestType: String)
 
 @main(Messages("menu.pullRequest"), project, utils.MenuType.PULL_REQUEST) {
+@prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
 <div class="page">
-    @prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
+
 
     <div class="pull-right">
         <div class="btn-group dbtn-group @if(project.isFork){margin-right-5}">

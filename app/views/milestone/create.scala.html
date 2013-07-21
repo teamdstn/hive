@@ -4,8 +4,9 @@
 @import models.enumeration._
 
 @main(title, project, utils.MenuType.MILESTONE) {
+@prjmenu(project, utils.MenuType.MILESTONE, "")
 <div class="page">
-	@prjmenu(project, utils.MenuType.MILESTONE, "")
+
 
     <div class="form-wrap milestone frm-wrap">
         <form class="nm" action="@routes.MilestoneApp.newMilestone(project.owner, project.name)" method="post">

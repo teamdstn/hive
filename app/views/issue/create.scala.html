@@ -7,8 +7,9 @@
 @import utils.AccessControl._
 
 @main(Messages(title), project, utils.MenuType.ISSUE) {
+@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
 <div class="page">
-	@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
+
 
 	<div class="content-wrap frm-wrap">
 
@@ -27,7 +28,7 @@
 				<textarea id="body" name="body" markdown="true" class="zen-mode text content .go-zen--textarea" tabindex="2"  data-label="@Messages("issue.error.emptyBody")"></textarea>
         		</dd>
             </dl>
-        
+
             @** fileUploader **@
             @if(!UserApp.currentUser.isAnonymous) {
                 @fileUploader(ResourceType.ISSUE_POST, null)

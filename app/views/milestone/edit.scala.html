@@ -5,8 +5,9 @@
 @implicitField = @{ helper.FieldConstructor(simpleForm) }
 
 @main(title, project, utils.MenuType.MILESTONE) {
+@prjmenu(project, utils.MenuType.MILESTONE, "")
 <div class="page">
-	@prjmenu(project, utils.MenuType.MILESTONE, "")
+
 
 	<div class="form-wrap milestone frm-wrap">
 		<form class="nm" action="@routes.MilestoneApp.editMilestone(project.owner, project.name, milestoneId)" method="post">

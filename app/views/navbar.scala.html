@@ -7,10 +7,30 @@
     if(m_type == menuType){ "active" }
 }
 
+@watching_count(loginId: String) = {
+    @User.findByLoginId(loginId).getWatchingProjects().size()
+}
+
 <header class="gnb-outer">
     <div class="gnb-inner">
         <div class="gnb-menu-wrap">
-            <a href="@routes.Application.index()" class="logo"><span>@Messages("hive.name")</span></a>
+
+        @if(!session.contains("userId")){
+            <a href="@routes.Application.index()" class="logo"><span>@Messages("hive.name")™</span></a>
+        } else {
+            <a href="@routes.Application.index()" class="logo min"><span>@Messages("hive.name")™/</span></a>
+            <h1 class="page-title">
+              <span class="gray"><a href="/teamdstn">@User.findByLoginId(session.get("loginId")).loginId</a> </span><!--
+            --> <a href="@routes.ProjectApp.newProjectForm()" class="button">@Messages("title.newProject")</a>
+
+            </h1>
+            <div class="status">
+                @Messages("project.createdByMe")<a href="javascript:void(0);">0</a>
+                @Messages("project.belongsToMe")<a href="javascript:void(0);">0</a>
+                @Messages("project.watchingproject")<a href="javascript:void(0);">@watching_count(session.get("loginId"))</a>
+            </div>
+        }
+            @**
             <ul class="gnb-menus unstyled">
                 <li class="menu @isActiveMenu(MenuType.NEW_PROJECT)">
                     <a href="@routes.ProjectApp.newProjectForm()">@Messages("title.newProject")</a>
@@ -22,6 +42,7 @@
                     <a href="@routes.HelpApp.help()">@Messages("title.help")</a>
                 </li>
             </ul>
+            **@
 			@usermenu(null)
         </div>
     </div>
@@ -36,4 +57,21 @@
     </div>
     }
     @** // **@
+
+    <div class="gnb-nav">
+      <ul class="gnb-menus unstyled">
+          <li class="menu @isActiveMenu(MenuType.NEW_PROJECT)">
+              <a href="@routes.ProjectApp.newProjectForm()">@Messages("title.newProject")</a>
+          </li>
+          <li class="menu @isActiveMenu(MenuType.PROJECTS)">
+              <a href="@routes.ProjectApp.projects()">@Messages("title.projectList")</a>
+          </li>
+          <li class="menu @isActiveMenu(MenuType.HELP)">
+              <a href="@routes.HelpApp.help()">@Messages("title.help")</a>
+          </li>
+          <li class="">
+              <a href="/assets/help/yobi-ui.html">Yobi Mood(temp)</a>
+          </li>
+      </ul>
+    </div>
 </header>

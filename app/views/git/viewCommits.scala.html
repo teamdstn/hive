@@ -4,8 +4,9 @@
 @import utils.TemplateHelper._
 
 @main(Messages("menu.pullRequest"), project, utils.MenuType.PULL_REQUEST) {
+@prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
     <div class="page">
-        @prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
+
 
         <p>
             @Messages("pullRequest.from")

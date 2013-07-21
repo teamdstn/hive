@@ -10,8 +10,9 @@
 }
 
 @main(Messages("menu.pullRequest"), project, utils.MenuType.PULL_REQUEST) {
+@prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
     <div class="page">
-        @prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
+
         <legend>
             <span data-toggle="tooltip" data-original-title="@Messages("pullRequest.from")">
                 <code>

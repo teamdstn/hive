@@ -28,10 +28,10 @@
 }
 
 @main(Messages("code.commits") + " @" + commit.getId, project, utils.MenuType.CODE) {
-
+@prjmenu(project, utils.MenuType.CODE, "main-menu-only")
 <div class="page">
 
-	@prjmenu(project, utils.MenuType.CODE, "main-menu-only")
+
 
 	<div class="code-browse-wrap">
         <div id="branches" class="btn-group branches pull-right" data-name="branch" data-activate="manual">
@@ -47,7 +47,7 @@
             }
             </ul>
         </div>
-           
+
 	    <ul class="nav nav-tabs" style="margin-bottom:20px;">
 	        <li>
                 <a href="@routes.CodeApp.codeBrowser(project.owner, project.name)">@Messages("code.files")</a>
@@ -62,7 +62,7 @@
             case (user: User, _, _) if !user.isAnonymous => {
                 <a href="@routes.UserApp.userInfo(commit.getAuthor.loginId)" class="avatar-wrap">
                     <img src="@commit.getAuthor.avatarUrl" alt="@commit.getAuthor.name" width="32" height="32"/>
-                </a> 
+                </a>
                 <strong>@commit.getAuthor.name</strong>
             }
             case (_, email, name) if email != null => {
@@ -114,9 +114,9 @@
 
         @views.html.commentForm(project, ResourceType.CODE_COMMENT, routes.CodeHistoryApp.newComment(project.owner, project.name, commit.getId).toString())
 	</div>
-	
+
 	<a href="javascript: history.back();" class="nbtn medium pull-right">@Messages("button.list")</a>
-	
+
 </div>
 
 @markdown(project)

@@ -4,8 +4,9 @@
 @implicitField = @{ helper.FieldConstructor(simpleForm) }
 
 @main(title, project, utils.MenuType.PULL_REQUEST) {
+@prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
 <div class="page">
-    @prjmenu(project, utils.MenuType.PULL_REQUEST, "main-menu-only")
+
     <div class="content-wrap frm-wrap">
         @helper.form(action=routes.PullRequestApp.newPullRequest(project.owner, project.name), 'enctype -> "multipart/form-data", 'class->"nm"){
             <legend>

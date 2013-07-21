@@ -30,8 +30,9 @@
 }
 
 @main(Messages("title.commitHistory"), project, utils.MenuType.CODE) {
+@prjmenu(project, utils.MenuType.CODE, "main-menu-only")
 <div class="page">
-	@prjmenu(project, utils.MenuType.CODE, "main-menu-only")
+
 
     @if(history.size() > 0) {
 	<div class="bubble-wrap dark-gray repo-wrap">
@@ -49,7 +50,7 @@
                     }
                 </ul>
             </div>
-            
+
 		    @defining(
 		        if(selectedBranch) {
 		            routes.CodeHistoryApp.history(project.owner, project.name, URLEncoder.encode(selectedBranch, "UTF-8"))
@@ -65,7 +66,7 @@
 		            <a href="@url">@Messages("code.commits")</a>
 		        </li>
 		    </ul>
-		    
+
 			<div id="history" class="commit-wrap">
 				<table class="code-table commits">
 					<thead class="thead">
@@ -90,14 +91,14 @@
                                 <span class="number-of-comments"><i class="ico ico-comment-bubble"></i> @numOfComment</span>
                                 }
                                 }
-                                
+
                                 @defining(commit.getMessage()){ commitMsg =>
                                 <a href="@routes.CodeHistoryApp.show(project.owner, project.name, commit.getId())">
 						            @commitMsg.split("\n")(0)
                                 </a>
-                                @if(commitMsg.split("\n").length > 1){ 
+                                @if(commitMsg.split("\n").length > 1){
                                 <button type="button" class="more"><i class="icon-ellipsis-horizontal"></i></button>
-                                <pre class="hidden">@commitMsg.replace(commitMsg.split("\n")(0)+"\n", "")</pre> 
+                                <pre class="hidden">@commitMsg.replace(commitMsg.split("\n")(0)+"\n", "")</pre>
                                 }
                                 }
 							</td>
@@ -138,7 +139,7 @@
             <a href="@url?page=@(page + 1)" class="nbtn medium pull-right">@Messages("code.older")</a>
             }
         </div>
-        
+
     } @** end of if(history.size) **@
 
   } @** end of defining url **@

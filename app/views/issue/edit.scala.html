@@ -7,8 +7,9 @@
 @import utils.AccessControl._
 
 @main(Messages(title), project, utils.MenuType.ISSUE) {
+@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
 <div class="page">
-	@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
+
 
 	<div class="content-wrap frm-wrap">
 
@@ -29,7 +30,7 @@
 			<textarea id="body" name="body" markdown="true" class="zen-mode text content" tabindex="2">@issue.body</textarea>
             	</dd>
             </dl>
-        
+
             @** fileUploader **@
             @if(!UserApp.currentUser.isAnonymous) {
                 @fileUploader(ResourceType.ISSUE_POST, issue.id)
@@ -116,7 +117,7 @@
             </dl>
         </div>
     </div>
-    
+
     <div class="row-fluid">
     	<div class="span9 right-txt actrow">
     	 	<button type="submit" class="nbtn orange medium">@Messages("button.save")</button><!--

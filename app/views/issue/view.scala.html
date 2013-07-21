@@ -17,8 +17,9 @@
 }
 
 @main(getTitle(issue, project).toString(), project, utils.MenuType.ISSUE){
+@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
 <div class="page board-view">
-	@prjmenu(project, utils.MenuType.ISSUE, "main-menu-only")
+
 
 	@** Post Info **@
 	<div class="board-header issue">
@@ -95,7 +96,7 @@
 		}
 
 		<a href="@routes.IssueApp.issues(project.owner, project.name,"open")" class="nbtn medium">@Messages("button.list")</a>
-		
+
 		<a href="@routes.IssueApp.newIssueForm(project.owner, project.name)" class="nbtn medium orange last">@Messages("issue.menu.new")</a>
 	</div>
 

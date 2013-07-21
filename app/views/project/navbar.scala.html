@@ -6,20 +6,39 @@
 
 <div class="gnb-inner">
 	<div class="gnb-menu-wrap">
-		<a href="@routes.Application.index()" class="logo"><span>@Messages("hive.name")</span></a>
+		<a href="@routes.Application.index()" class="logo min"><span>@Messages("hive.name")™/</span></a>
 
-		<h1 class="page-title">
-			<span class="gray">/ <a href="@routes.UserApp.userInfo(project.owner)">@project.owner</a> /</span><!--
-	 	--> <a href="@routes.ProjectApp.project(project.owner, project.name)">@project.name</a>
-		</h1>
+      <h1 class="page-title">
+        <span class="gray"><a href="@routes.UserApp.userInfo(project.owner)">@project.owner</a> /</span><!--
+      --> <a href="@routes.ProjectApp.project(project.owner, project.name)">@project.name</a>
+      </h1>
 
-        @if(project.isFork()){
-        <div class="forked">
-            <i id="forkedFrom" class="icon-code-fork icon-2x vmiddle" data-content="@Messages("fork.original") <a href='@routes.ProjectApp.project(project.originalProject.owner, project.originalProject.name)'><strong>@project.originalProject.owner / @project.originalProject.name</strong></a>"></i>
-        </div>
-        }
+      <div class="status">
+      @if(session.contains("loginId")){
+          @if(project != null){
+          <a>manager</a>
+          }
+      }
 
-        @usermenu(project)
+
+          <a>30</a>
+          <a>40</a>
+      </div>
+    @if(project.isFork()){
+      <div class="forked-fixed">
+      @Messages("fork.original") <a href='@routes.ProjectApp.project(project.originalProject.owner, project.originalProject.name)'><strong>@project.originalProject.owner / @project.originalProject.name</strong></a>
+      </div>
+    }
+
+      @**
+      @if(project.isFork()){
+      <div class="forked">
+          <i id="forkedFrom" class="icon-code-fork icon-2x vmiddle" data-content="@Messages("fork.original") <a href='@routes.ProjectApp.project(project.originalProject.owner, project.originalProject.name)'><strong>@project.originalProject.owner / @project.originalProject.name</strong></a>"></i>
+      </div>
+      }
+      **@
+
+      @usermenu(project)
 	</div>
 </div>
 

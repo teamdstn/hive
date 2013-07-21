@@ -1,13 +1,23 @@
 @(project:Project)
 
 <div class="gnb-menus right">
+
+    <div class="search-bar">
+        <form action="@routes.ProjectApp.projects()" class="form-searchbar">
+            <input type="text" class="text" name="filter" autocomplete="off" accesskey="S"><!--
+         --><button type="submit" class="icon-search"></button>
+        </form>
+    </div>
+
 @if(session.contains("loginId")){
+    @**
     @if(project != null){
     <div class="member-role">
         <i class="icon-user icon-large"></i>
         @Messages("role." + ProjectUser.roleOf(session.get("loginId"), project))
     </div>
     }
+    **@
     <div class="usermenu btn-group">
         <button class="btn dropdown-toggle large" data-toggle="dropdown">
             <div class="d-label">
@@ -64,10 +74,4 @@
     </div>
 }
 
-    <div class="search-bar">
-        <form action="@routes.ProjectApp.projects()" class="form-searchbar">
-            <input type="text" class="text" name="filter" autocomplete="off" accesskey="S"><!--
-         --><button type="submit" class="ico ico-search"></button>
-        </form>
-    </div>
 </div>

@@ -10,10 +10,12 @@
 }
 
 @main(message, project, utils.MenuType.PROJECT_SETTING) {
+@prjmenu(project, utils.MenuType.PROJECT_SETTING, "")
+
 <div class="page">
-	@prjmenu(project, utils.MenuType.PROJECT_SETTING, "")
-    @partial_settingmenu(project)
-    
+  @partial_settingmenu(project)
+
+
 	<div class="inner-bubble">
 		<form class="nm" action="@routes.ProjectApp.newMember(project.owner, project.name)" method="post" id="addNewMember">
 			<input type="text" class="text uname" id="loginId" name="loginId"

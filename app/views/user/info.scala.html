@@ -22,16 +22,47 @@
 @home(user.loginId, utils.MenuType.USER) {
 
 <div class="page">
+
+    @**
     <h1 class="page-title">
         <a href="@routes.ProjectApp.projects()">@Messages("hive.name")</a>
         <a href="@routes.UserApp.userInfo(user.loginId)"> / @user.loginId</a>
     </h1>
+    **@
     <section class="user-box">
+
+        <div class="user-info-box ribbon-form">
+          <div class="ribbon"></div>
+          <div class="outer">
+            <div class="title-area"><span class="logo-font">yobi</span></div>
+            <img src="@user.avatarUrl" alt="">
+            @if(user != null && session != null && user.loginId == session.get("loginId")){
+            <div class="edit">
+                <a href="@routes.UserApp.editUserInfoForm()">
+                @**
+                <i class="icon-edit icon-white"></i>
+                **@
+                @Messages("userinfo.editProfile")</a>
+            </div>
+            }
+
+            <P class="uname">@user.name</P>
+            <P class="email">@user.email</P>
+            <div class="user-since">
+                <strong>@Messages("userinfo.since")</strong>
+                <span class="since">@user.getDateString</span>
+            </div>
+
+
+          </div>
+        </div>
+
+
+        @**
         <div class="user-info-box">
             <div class="whoami-wrap" style="background-image:url('@user.avatarUrl')">
                 <div class="whoami">
-                    <span class="uname">@user.name</span>
-                    <span class="email">@user.email</span>
+
                 </div>
                 @if(user != null && session != null && user.loginId == session.get("loginId")){
                 <div class="edit">
@@ -46,8 +77,16 @@
                 <span class="since">@user.getDateString</span>
             </div>
         </div>
+        **@
 
         <div class="user-stream-box">
+
+          <h1 class="page-title">
+              <a href="@routes.ProjectApp.projects()">@Messages("hive.name")</a>
+              <a href="@routes.UserApp.userInfo(user.loginId)"> / @user.loginId</a>
+          </h1>
+
+
             @if(user != null && session != null && user.loginId == session.get("loginId")){
             <div class="pull-right">
                 <a href="@routes.ProjectApp.newProjectForm()" class="nbtn medium orange last">
@@ -55,7 +94,7 @@
                 </a>
             </div>
             }
-            
+
             <ul class="nav nav-tabs">
                 <li class="active">
                     <a href="#createdByMe" data-toggle="tab">
@@ -78,7 +117,7 @@
                 </li>
                 }
             </ul>
-            
+
             <div class="tab-content">
                 <div id="createdByMe" class="tab-pane active">
                     <ul class="user-streams all-projects">
@@ -96,7 +135,7 @@
                     }
                     </ul>
                 </div>
-                
+
                 @if(user.loginId == session.get("loginId")){
                 <div id="watching" class="tab-pane">
                     <ul class="user-streams all-projects">

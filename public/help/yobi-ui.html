@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Yobi</title>
+    <base href="http://localhost:9000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.ico">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/assets/stylesheets/temp.css">
+    <link rel="stylesheet" href="/assets/stylesheets/color.ios7.css">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="/assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="/assets/images/webfont/entersans/css/entersansman.css">
+    <script type="text/javascript" src="/assets/javascripts/lib/jquery/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.Common.js"></script>
+  </head>
+  <body>
+    <div id="SiteHeader" class="header">
+      <div class="gnb-inner container">
+        <a href="javascript:void(0);" title="Narrative Science" rel="home" class="logo">yobi™</a>
+        <h1 class="page-title hidden">
+          <span class="gray"><a href="/teamdstn">teamdstn</a> </span><!--
+            --> <a href="/teamdstn/YobiFE">create 프로젝트</a>
+        </h1>
+        <div class="forked hide">
+          forked from <a>teamdstn/YobiFE</a>
+        </div>
+        <div class="status hidden">
+          <a>매니저</a>
+          <a class="active"><i class="icon-lock"></i></a>
+          <a><i class="icon-eye-open"></i></a>
+        </div>
+        <div class="gnb-menus expander" style="float:right;">
+          <div class="search-bar">
+            <form action="/projects" class="form-searchbar">
+              <input type="text" class="text" name="filter" autocomplete="off" accesskey="S"><!--
+                --><button type="submit" class="icon-search"></button>
+            </form>
+            <span><a href="javascript:void(0);" class="button">Get Started</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- calendar -->
+    <nav class="nav-main ">
+      <ul id="menu-main" class="menu">
+        <li class="menu-why-narratives"><a href="javascript:void(0);">Explore Project</a></li>
+        <li class="menu-what-is-quill"><a href="javascript:void(0);">Help</a></li>
+      </ul>
+    </nav>
+    <div class="section calltoaction videos">
+      <h2>Build software better, together.</h2>
+      <h3><span class="entersan">yobi</span>, Software development platform.</h3>
+      <a href="javascript:void(0);" class="button black large">Get Started</a>
+    </div>
+    <div class="section quill threecols">
+      <h6>Open Source Project. Code Repository. Issue Tracker.</h6>
+      <h4>Software development platform</h4>
+      <div class="column">
+        <div class="icon funnel"></div>
+        <b>Open Source Project</b>
+        <p>
+          <span class="strong">원하는 이름으로</span>
+          프로젝트를 원하는 만큼 만들어보세요.
+          유일한 한계는 상상력의 한계일 뿐입니다.
+        </p>
+      </div>
+      <div class="column">
+        <div class="icon write"></div>
+        <b>Code Repository</b>
+        <p>
+          <span class="strong">작성한 코드는</span>
+          모두 이력이 관리되는 형태로 안전하게 서버에 보관됩니다
+        </p>
+      </div>
+      <div class="column last">
+        <div class="icon light"></div>
+        <b>Issue Tracker</b>
+        <p>
+          <span class="strong">팀이 함께 고민하고</span>
+          처리해야 하는 내용들을 적고
+          거친 파도를 합심해 헤쳐나가듯 해결해 나갑니다.
+        </p>
+      </div>
+      <a href="javascript:void(0);" class="button">Create your project</a>
+    </div>
+    <hr/>
+    <div class="section feeds">
+      <div class="container">
+        <h6>There is no repository</h6>
+        <h4>Create a new repository on the command line</h4>
+        <div class="row">
+          <div class="span12" style="text-align:left;">
+            <pre><code>git clone http://127.0.0.1:9000/teamdstn/yobife-1
+cd yobife-1/
+touch readme.md
+git add readme.md
+git commit -m "Hello yobi"
+git push origin master</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+
+    <div id="SiteHeader" class="header">
+      <div class="gnb-inner container">
+        <a href="javascript:void(0);" title="Narrative Science" rel="home" class="logo min">yobi™/</a>
+        <h1 class="page-title">
+          <span class="gray"><a href="/teamdstn">teamdstn</a> /</span><!--
+            --> <a href="/teamdstn/YobiFE">YobiFE-1-1</a>
+        </h1>
+        <div class="forked hide">
+          forked from <a>teamdstn/YobiFE</a>
+        </div>
+        <div class="status">
+          <a>매니저</a>
+          <a class="active"><i class="icon-lock"></i></a>
+          <a><i class="icon-eye-open"></i></a>
+        </div>
+        <div class="gnb-menus expander" style="float:right;">
+          <div class="search-bar">
+            <form action="/projects" class="form-searchbar">
+              <input type="text" class="text" name="filter" autocomplete="off" accesskey="S"><!--
+                --><button type="submit" class="icon-search"></button>
+            </form>
+            <div class="btn-group">
+              <button class="btn btn-primary">Action</button>
+              <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+            <span class="avatar-wrap smaller">
+            <img src="/assets/images/default-avatar-34.png" width="30" height="30">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-main music">
+      <ul id="menu-main" class="menu">
+        <li class="menu-why-narratives"><a href="javascript:void(0);">Explore Project</a></li>
+        <li class="menu-what-is-quill"><a href="javascript:void(0);">Help</a></li>
+      </ul>
+    </nav>
+
+    <div class="section tmp">
+      <div class="container">
+        <h6>There is no readme</h6>
+        <h4>You can see <span class="strong">README.md</span> here if you add it into the code repositorys root directory.</h4>
+        <div class="row">
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="container section tmp">
+      <div class="row-fluid  pullRequest-content">
+        <div class="span4">
+          <h4>Fork.</h4>
+          <h6>Forking is a great way to contribute to a project even though you dont have write access.</h6>
+          <div class="row-fluid">
+            <div class="span4">
+              <ul>
+                <li>
+                  <p style="width:100%; background-color:#FFCC00; padding:4px;">User/Project</p>
+                </li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+              </ul>
+            </div>
+            <div class="span4">
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li class="guide-style"></li>
+              </ul>
+            </div>
+            <div class="span4">
+              <ul>
+                <li>My/Project</li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <h4>PullRequest.</h4>
+          <h6>Please select your branch that contains your code to send and original projects branch to receive your code, and explain what you have done.</h6>
+          <div class="row-fluid">
+            <div class="span4">
+              <ul>
+                <li style="background-color:#999;">User/Project</li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+              </ul>
+            </div>
+            <div class="span4">
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li class="guide-style"></li>
+              </ul>
+            </div>
+            <div class="span4">
+              <ul>
+                <li style="background-color:#999;">My/Project</li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style">
+                  <div class="re-area"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <h4>Accept.</h4>
+          <h6>If a member of the original project accept the code, it will be merged into.</h6>
+          <div class="row-fluid">
+            <div class="span4">
+              <ul>
+                <li style="background-color:#999;">User/Project</li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style blur"></li>
+                <li class="dot-style blur"></li>
+                <li class="dot-style">
+                  <div class="re-area-x"></div>
+                </li>
+              </ul>
+            </div>
+            <div class="span4">
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li class="guide-style"></li>
+                <li></li>
+                <li></li>
+                <li class="guide-style deg"></li>
+              </ul>
+            </div>
+            <div class="span4">
+              <ul>
+                <li style="background-color:#999;">My/Project</li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+                <li class="dot-style"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+
+    <nav class="nav-main maps">
+      <ul id="menu-main" class="menu">
+        <li class="menu-why-narratives"><a href="javascript:void(0);">Explore Project</a></li>
+        <li class="menu-what-is-quill"><a href="javascript:void(0);">Help</a></li>
+      </ul>
+    </nav>
+
+
+
+    <div class="container">
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="ribbon-form">
+            <div class="ribbon"></div>
+            <div class="outer">
+              <div class="title-area">Login <span class="logo">yobi</span></div>
+              <h1>Let's get started.</h1>
+              <p>This will be an amazing experience</p>
+              <form action="login">
+                <div class="input-area">
+                  <div class="blockinput">
+                    <label class="icon-user" for="loginId">Login ID</label>
+                    <input id="loginId" name="loginId" type="text" autocomplete="off" placeholder="Login ID">
+                  </div>
+                  <div class="blockinput">
+                    <label class="icon-lock" for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="off" placeholder="Password">
+                  </div>
+                </div>
+                <div class="act-row right-txt">
+                  <input id="remember-me" type="checkbox" name="rememberMe" class="checkbox" autocomplete="off">
+                  <label for="remember-me" class="bg-checkbox">Remember Me</label>
+                  <a href="/lostPassword" class="forgot-password"><span>Forgot password?</span></a>
+                </div>
+                <button>Login</button>
+              </form>
+            </div>
+          </div>
+          <p style="text-align:center;"><span class="btn-round ">or</span></p>
+          <div class="row" style="text-align:center;">
+            <a href="javascript:void(0);" class="button black" style="width: 300px; margin-left: 20px; margin-top: -10px; text-align:center;">회원가입</a>
+          </div>
+
+          <!--
+            <p style="text-align:center;"><span class="btn-round mid">or</span></p>
+            <p style="text-align:center;"><span class="btn-round big">or</span></p>
+            -->
+        </div>
+        <div class="span6">
+          <div class="ribbon-form">
+            <div class="ribbon"></div>
+            <div class="outer">
+              <div class="title-area bg-master">Sign Up <span class="logo">yobi</span></div>
+              <h1>Let's get started.</h1>
+              <p>This will be an amazing experience</p>
+              <form action="login">
+                <div class="input-area">
+                  <div class="blockinput">
+                    <label class="icon-user" for="loginId">Login ID</label>
+                    <input id="loginId" name="loginId" type="text" autocomplete="off" placeholder="ID (lower case)">
+                  </div>
+                  <div class="blockinput">
+                    <label class="icon-user" for="uname">Name</label>
+                    <input id="uname" type="text" name="name" placeholder="Name" autocomplete="off">
+                  </div>
+                  <div class="blockinput">
+                    <label class="icon-envelope" for="email">E-mail</label>
+                    <input id="email" type="text" name="email" placeholder="E-mail" autocomplete="off">
+                  </div>
+                  <div class="blockinput">
+                    <label class="icon-lock" for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="off" placeholder="Password">
+                  </div>
+                  <div class="blockinput">
+                    <label class="icon-ok-circle" for="retypedPassword">Password confirmation</label>
+                    <input id="retypedPassword" name="password" type="password" autocomplete="off" placeholder="Password confirmation">
+                  </div>
+                </div>
+                <div class="act-row right-txt">
+                  HAVE AN ACCOUNT ALREADY? <a href="/users/loginform" class="go-login">Log in</a>
+                </div>
+                <button>Sign Up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="ribbon-form">
+            <div class="ribbon"></div>
+            <div class="outer">
+              <div class="title-area">Project <span class="logo">yobi</span></div>
+              <h1>Create Project.</h1>
+              <p></p>
+              <form action="login">
+                <div class="input-area">
+                  <div class="blockinput">
+                    <label class="icon-user" for="loginId">Project Name</label>
+                    <input id="loginId" name="loginId" type="text" autocomplete="off" placeholder="Login ID">
+                  </div>
+                  <div class="blockinput">
+                    <label class="icon-lock" for="password">some</label>
+                    <input id="password" name="password" type="password" autocomplete="off" placeholder="Some">
+                  </div>
+                </div>
+
+                <button>Login</button>
+              </form>
+            </div>
+          </div>
+
+
+          <p style="text-align:center;"><span class="btn-round mid" style="line-height: 31px;">or<br> SignUp</span> </p>
+
+
+        </div>
+        <div class="span6">
+          <div class="ribbon-form">
+            <div class="ribbon"></div>
+            <div class="outer">
+              <div class="title-area">Login <span class="logo">yobi</span></div>
+              <img src="/assets/images/default-avatar-128.png" alt="">
+              <p>teamdstn</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="ribbon-form">
+            <div class="ribbon"></div>
+            <div class="outer">
+              <div class="title-area">Login <span class="logo">yobi</span></div>
+              <img src="/assets/images/default-avatar-128.png" alt="" />
+              <p>teamdstn</p>
+            </div>
+          </div>
+          <!--
+            <p style="text-align:center;"><span class="btn-round mid">or</span></p>
+            <p style="text-align:center;"><span class="btn-round big">or</span></p>
+            -->
+        </div>
+        <div class="span9">
+          <div class="tabs">
+            <div class="clearfix">
+              <ul class="tabs-control-nav" style="float:left">
+                <li class="flex-active"><span>ALL projects</span></li>
+                <li><span>PUBLIC projects</span></li>
+                <li><span>개인 projects</span></li>
+              </ul>
+              <div style="float:right">
+                <!--
+                  <a class="button black" style="display: table-cell; vertical-align: middle; width: 120px; height: 70px;">
+                  -->
+                <a class="button black">
+                create
+                </a>
+                <a class="button">
+                some
+                </a>
+              </div>
+            </div>
+            <div>
+              <ul class="all-projects">
+                <li class="project">
+                  <div class="info-wrap">
+                    <div class="owner-avatar-wrap">
+                      <a href="/teamdstn">
+                      <img src="/assets/images/default-avatar-128.png" alt="DustinKo">
+                      </a>&nbsp;
+                    </div>
+                    <div style="float:left">
+                      <div class="header">
+                        <a href="/teamdstn/yobife-1" class="black">yobife-1</a>
+                      </div>
+                      <div class="desc">
+                        Yobi FrontEnd
+                      </div>
+                      <p class="name-tag">by <a href="/teamdstn" class="owner-name-small">teamdstn</a>
+                        at <strong>3 days ago</strong> <span class="small-font"></span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="stats-wrap pull-right">
+                    <div class="members">
+                      <ul class="unstyled">
+                      </ul>
+                      <p>
+                        <i class="icon-user icon-middle"></i><strong>1</strong>
+                        <i class="icon-star icon-middle"></i> <strong>0</strong>
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                <li class="project">
+                  <div class="info-wrap">
+                    <div class="owner-avatar-wrap">
+                      <a href="/teamdstn">
+                      <img src="/assets/images/default-avatar-128.png" alt="DustinKo">
+                      </a>&nbsp;
+                    </div>
+                    <div style="float:left">
+                      <div class="header">
+                        <a href="/teamdstn/yobife" class="black">yobife</a>
+                      </div>
+                      <div class="desc">
+                        Yobi FrontEnd
+                      </div>
+                      <p class="name-tag">by <a href="/teamdstn" class="owner-name-small">teamdstn</a>
+                        at <strong>3 days ago</strong> <span class="small-font"></span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="stats-wrap pull-right">
+                    <div class="members">
+                      <ul class="unstyled">
+                      </ul>
+                      <p>
+                        <i class="icon-user icon-middle"></i><strong>1</strong>
+                        <i class="icon-star icon-middle"></i> <strong>0</strong>
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div id="helpKeys" class="container">
+      <div class="row-fluid">
+        <div class="span4">
+          <h5>projects</h5>
+          <span class="helpKey">H</span>
+          <span class="help-inline">Home</span><br>
+          <span class="helpKey">B</span>
+          <span class="help-inline">Board</span><br>
+          <span class="helpKey">I</span>
+          <span class="help-inline">Issue</span><br>
+          <span class="helpKey">C</span>
+          <span class="help-inline">Code</span><br>
+          <span class="helpKey">M</span>
+          <span class="help-inline">Milestone</span><br>
+          <span class="helpKey">F</span>
+          <span class="help-inline">Pull Request</span><br>
+          <span class="helpKey">Q</span>
+          <span class="help-inline">Setting</span><br>
+        </div>
+        <div class="span4">
+          <h5>Issue List</h5>
+          <span class="helpKey">N</span>
+          <span class="help-inline">New</span><br>
+          <span class="helpKey">A</span>
+          <span class="help-inline">Previous Page</span><br>
+          <span class="helpKey">S</span>
+          <span class="help-inline">Next Page</span><br>
+          <span class="helpKey xt">CTRL</span><span class="helpKey">A</span>
+          <span class="help-inline">Select All</span><br>
+        </div>
+        <div class="span4">
+          <h5>Site</h5>
+          <span class="helpKey">P</span>
+          <span class="help-inline">My Profile</span><br>
+          <span class="helpKey xt">ALT</span><span class="helpKey">S</span>
+          <span class="help-inline">Site Search</span><br>
+          <span class="helpKey xt">CTRL</span><span class="helpKey xt">ENTER</span>
+          <span class="help-inline">Submit Form</span><br>
+        </div>
+      </div>
+      <!--
+        <p class="actrow">
+          <button type="button" class="nbtn medium orange" data-dismiss="modal">Confirm</button>
+        </p>
+        -->
+    </div>
+    <hr/>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="span12 page-title">
+            <h4 style="font-size:20px; text-align:left;">userHome/<span class="strong">projecTtitle</span></h4>
+            <a>forked</a > <a>url</a> <a>watching</a>
+            <i id="forkedFrom" class="icon-code-fork icon-2x vmiddle" data-content="Forked from &lt;a href='/teamdstn/yobife'&gt;&lt;strong&gt;teamdstn / yobife&lt;/strong&gt;&lt;/a&gt;" data-original-title="" title=""></i>
+          </div>
+          <div class="span3 search-wrap">
+            <div class="inner bggray">
+              <ul class="preset-list">
+                <li class="active"><a href="/teamdstn/yobife-1/issues?state=all&amp;milestoneId=">All Issues <strong class="num-badge pull-right">0</strong></a></li>
+                <li><a href="/teamdstn/yobife-1/issues?state=all&amp;authorLoginId=&amp;milestoneId=">Created by me <strong class="num-badge pull-right">0</strong></a></li>
+              </ul>
+              <form id="search" action="/teamdstn/yobife-1/issues?state=all" method="get">
+                <input type="hidden" name="orderBy" value="createdDate" class="h-value order">
+                <input type="hidden" name="state" value="all">
+                <div class="row-fluid">
+                  <div class="span10">
+                    <input type="text" name="filter" class="text" placeholder="search at current project" value="">
+                  </div>
+                  <div class="span2">
+                    <button type="submit" class="nbtn medium last">.</button>
+                  </div>
+                </div>
+                <div class="row-fluid right-txt">
+                  <button type="button" class="btn-advanced btn-transparent"><i class="icon-plus"></i>Advanced Search</button>
+                </div>
+                <div id="advanced-search-form" class="srch-advanced">
+                  <dl class="issue-option">
+                    <dt>Author</dt>
+                    <dd><input type="text" name="authorLoginId" class="input-medium" value=""></dd>
+                  </dl>
+                  <dl class="issue-option">
+                    <dt>Assignee</dt>
+                    <dd>
+                      <div class="btn-group" data-name="assigneeId">
+                        <button class="btn dropdown-toggle auto" data-toggle="dropdown">
+                        <span class="d-label">All</span>
+                        <span class="d-caret"><span class="caret"></span></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li data-value=""><a>All</a></li>
+                          <li data-value="-1"><a>No Assignee</a></li>
+                        </ul>
+                      </div>
+                    </dd>
+                  </dl>
+                  <dl class="issue-option">
+                    <dt>Milestone</dt>
+                    <dd>
+                      <div class="btn-group" data-name="milestoneId">
+                        <button class="btn dropdown-toggle auto" data-toggle="dropdown">
+                        <span class="d-label">All</span>
+                        <span class="d-caret"><span class="caret"></span></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li data-value=""><a>All</a></li>
+                          <li data-value="0"><a>No Milestone</a></li>
+                        </ul>
+                      </div>
+                    </dd>
+                  </dl>
+                </div>
+                <dl id="labels" class="issue-option labels-wrap">
+                  <dt>
+                    Select Label
+                  </dt>
+                  <dd>
+                    <fieldset class="labels issue-form-labels"></fieldset>
+                  </dd>
+                </dl>
+              </form>
+              <p class="bottom-actrow">
+                <a href="/teamdstn/yobife-1/issues?state=all&amp;format=xls" class="nbtn white"><i class=""></i>Download as Excel</a>
+              </p>
+            </div>
+          </div>
+          <div class="span9">
+            <h6>There is no Issue.</h6>
+            <h4>Create Issue</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+
+    <div id="SiteHeader" class="header">
+      <div class="gnb-inner container">
+        <a href="javascript:void(0);" title="Narrative Science" rel="home" class="logo min">yobi™/</a>
+        <h1 class="page-title">
+          <span class="gray"><a href="/teamdstn">teamdstn</a> </span><!--
+            --> <a href="/teamdstn/YobiFE">프로젝트 만들기</a>
+        </h1>
+        <div class="forked hide">
+          forked from <a>teamdstn/YobiFE</a>
+        </div>
+        <div class="status">
+          <a>1</a>
+          <a>30</a>
+          <a>40</a>
+        </div>
+        <div class="gnb-menus expander" style="float:right;">
+          <div class="search-bar">
+            <form action="/projects" class="form-searchbar">
+              <input type="text" class="text" name="filter" autocomplete="off" accesskey="S"><!--
+                --><button type="submit" class="icon-search"></button>
+            </form>
+            <span class="avatar-wrap smaller">
+            <img src="/assets/images/default-avatar-34.png" width="30" height="30">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-main camera">
+      <ul id="menu-main" class="menu">
+        <li class="menu-why-narratives"><a href="javascript:void(0);">Explore Project</a></li>
+        <li class="menu-what-is-quill"><a href="javascript:void(0);">Help</a></li>
+      </ul>
+    </nav>
+
+    <div id="section3" class="content">
+      <div class="tabs">
+        <div class="clearfix">
+          <ul class="tabs-control-nav" style="float:left">
+            <li class="flex-active"><span>ALL projects</span></li>
+            <li><span>PUBLIC projects</span></li>
+            <li><span>개인 projects</span></li>
+          </ul>
+          <div style="float:right">
+            <!--
+              <a class="button black" style="display: table-cell; vertical-align: middle; width: 120px; height: 70px;">
+              -->
+            <a class="button black">
+            create
+            </a>
+            <a class="button">
+            some
+            </a>
+          </div>
+        </div>
+        <div>
+          <ul class="all-projects">
+            <li class="project">
+              <div class="info-wrap">
+                <div class="owner-avatar-wrap">
+                  <a href="/teamdstn">
+                  <img src="/assets/images/default-avatar-128.png" alt="DustinKo">
+                  </a>&nbsp;
+                </div>
+                <div style="float:left">
+                  <div class="header">
+                    <a href="/teamdstn/yobife-1" class="black">yobife-1</a>
+                  </div>
+                  <div class="desc">
+                    Yobi FrontEnd
+                  </div>
+                  <p class="name-tag">by <a href="/teamdstn" class="owner-name-small">teamdstn</a>
+                    at <strong>3 days ago</strong> <span class="small-font"></span>
+                  </p>
+                </div>
+              </div>
+              <div class="stats-wrap pull-right">
+                <div class="members">
+                  <ul class="unstyled">
+                  </ul>
+                  <p>
+                    <i class="icon-user icon-middle"></i><strong>1</strong>
+                    <i class="icon-star icon-middle"></i> <strong>0</strong>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="project">
+              <div class="info-wrap">
+                <div class="owner-avatar-wrap">
+                  <a href="/teamdstn">
+                  <img src="/assets/images/default-avatar-128.png" alt="DustinKo">
+                  </a>&nbsp;
+                </div>
+                <div style="float:left">
+                  <div class="header">
+                    <a href="/teamdstn/yobife" class="black">yobife</a>
+                  </div>
+                  <div class="desc">
+                    Yobi FrontEnd
+                  </div>
+                  <p class="name-tag">by <a href="/teamdstn" class="owner-name-small">teamdstn</a>
+                    at <strong>3 days ago</strong> <span class="small-font"></span>
+                  </p>
+                </div>
+              </div>
+              <div class="stats-wrap pull-right">
+                <div class="members">
+                  <ul class="unstyled">
+                  </ul>
+                  <p>
+                    <i class="icon-user icon-middle"></i><strong>1</strong>
+                    <i class="icon-star icon-middle"></i> <strong>0</strong>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-main">
+      <ul id="menu-main" class="menu">
+        <li class="menu-why-narratives"><a href="javascript:void(0);">Explore Project</a></li>
+        <li class="menu-what-is-quill"><a href="javascript:void(0);">Help</a></li>
+      </ul>
+    </nav>
+
+    <div class="section tmp">
+      <div class="container">
+        <ul class="qas">
+          <li class="qa">
+            <div class="question-wrap">
+              <i class="ico ico-q"></i>
+              <a href="#!/toggle" class="question">HIVE를 설치하고 싶어요. i want install HIVE</a>
+              <i class="ico icor"></i>
+            </div>
+            <div class="answer-wrap">
+              <i class="ico ico-a"></i>
+              <div class="answer" style="width:100%">
+                HIVE를 설치하기 전에 준비해야 할것은 다음과 같습니다.
+                <ul>
+                  <li><a href="http://www.oracle.com/technetwork/java/javase">JDK 1.6이상</a></li>
+                  <li><a href="http://www.playframework.org/">Play Framework</a></li>
+                  <li><a href="http://git-scm.com/">Git Client</a></li>
+                </ul>
+                위의 프로그램을 모두 인스톨 하신후 소스코드를 받습니다.
+                <pre><code># git clone https://github.com/nforge/hive.git</code></pre>
+                인스톨된 폴더로 가서 HIVE를 실행시키면 됩니다.
+                <pre><code># play run</code></pre>
+              </div>
+            </div>
+          </li>
+          <li class="qa">
+            <div class="question-wrap">
+              <i class="ico ico-q"></i>
+              <a href="#!/toggle" class="question">프로젝트를 새로 생성하고 싶어요.</a>
+              <i class="ico icor"></i>
+            </div>
+            <div class="answer-wrap">
+              <i class="ico ico-a"></i>
+              <div class="answer" style="width:100%">
+                <p>상단의 "새 프로젝트 시작"을 클릭하신후 필요한 정보를 입력하시면 됩니다.</p>
+                <p>
+                  공개설정에서 공개를 택하게 되면 해당 프로젝트의 멤버가 아닌
+                  사용자들도 해당 프로젝트를 둘러 볼 수 있게 되며 멤버가 아니라면
+                  코드 저장소를 익명으로 접근하여 소스코드를 받아 갈 수는 있지만
+                  소스코드를 수정하지는 못합니다. 공개설정에서 비공개를 선택하면
+                  해당 프로젝트의 멤버가 아닌 사용자들은 단지 설명과
+                  이름만을 볼수 있습니다.
+                </p>
+                <p>
+                  코드 저장소 방식은 현재 Git과 Subversion을 지원합니다.
+                  Subversion과 Git은 전 세계적으로 널리 쓰이고 있으며
+                  충분한 신뢰성과 성능을 가지고 있습니다.
+                </p>
+                <p>
+                  위의 내용을 다 작성하셨다면 "프로젝트 생성" 버튼을 누르면
+                  새로운 프로젝트를 생성하실수 있습니다.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="qa">
+            <div class="question-wrap">
+              <i class="ico ico-q"></i>
+              <a href="#!/toggle" class="question">내가 참여하는 프로젝트들은 어디서 볼수 있나요?</a>
+              <i class="ico icor"></i>
+            </div>
+            <div class="answer-wrap">
+              <i class="ico ico-a"></i>
+              <div class="answer" style="width:100%">
+                <a href="/">메인화면</a>
+                우측 하단에 다음과 같이 참여하고 있는 프로젝트의 목록을 볼수 있습니다.
+                자물쇠가 있는 것은 비공개 프로젝트이며 자물쇠가 없는 것은 공개 프로젝트 입니다.
+                혹은 자신의 <a href="/info">정보 페이지</a>에서도 확인하실수 있습니다.
+              </div>
+            </div>
+          </li>
+          <li class="qa">
+            <div class="question-wrap">
+              <i class="ico ico-q"></i>
+              <a href="#!/toggle" class="question">프로젝트 탈퇴는 어떻게 하나요.</a>
+              <i class="ico icor"></i>
+            </div>
+            <div class="answer-wrap">
+              <i class="ico ico-a"></i>
+              <div class="answer" style="width:100%">
+                자신의 <a href="/info">정보 페이지</a>에서 참여하고 있는 프로젝트 목록을 볼 수있고
+                탈퇴도 할수 있습니다. 자신이 프로젝트의 유일한 관리자라면 해당 프로젝트에서 탈퇴를 할 수 없습니다.
+              </div>
+            </div>
+          </li>
+          <li class="qa">
+            <div class="question-wrap">
+              <i class="ico ico-q"></i>
+              <a href="#!/toggle" class="question">게시판에서는 어떠한 것들을 할수 있나요?</a>
+              <i class="ico icor"></i>
+            </div>
+            <div class="answer-wrap">
+              <i class="ico ico-a"></i>
+              <div class="answer" style="width:100%">
+                게시판에서는 다음과 같은 기능이 가능합니다.
+                <ul>
+                  <li>게시물 읽기: 사용자는 게시물의 내용을 볼 수 있다.</li>
+                  <li>게시물 댓글 등록: 로그인 유저는 게시물에 댓글을 남길 수 있다.</li>
+                  <li>게시물 댓글 조회: 사용자는 게시물의 댓글을 볼 수 있다.</li>
+                  <li>게시물 댓글 삭제: 로그인 유저는 자신이 남긴 댓글을 삭제할 수 있다.</li>
+                  <li>관리자 게시물 댓글 삭제: 프로젝트 관리자는 댓글을 삭제할 수 있다.</li>
+                  <li>관리자 게시물 수정: 프로젝트 관리자는 게시물을 편집/삭제 할 수 있다.</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="qa">
+            <div class="question-wrap">
+              <i class="ico ico-q"></i>
+              <a href="#!/toggle" class="question">HIVE의 버그를 발견했어요.</a>
+              <i class="ico icor"></i>
+            </div>
+            <div class="answer-wrap">
+              <i class="ico ico-a"></i>
+              <div class="answer" style="width:100%">
+                HIVE는 현재 Open Source로 진행되고 있습니다. 버그를 발견하셨다면
+                <a href="https://github.com/nforge/hive/issues">HIVE 이슈트래커에 등록</a>해 주시거나
+                패치를 만들어 보내주시면 됩니다.
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <footer class="footer">
+      <nav class="nav-footer">
+        <ul id="menu-green-footer" class="menu">
+          <li><a href="/">.</a></li>
+          <li><a href="javascript:void(0);">Why Yobi</a></li>
+          <li><a href="javascript:void(0);">.</a></li>
+          <li><a href="javascript:void(0);">.</a></li>
+          <li><a href="javascript:void(0);">.</a></li>
+          <li><a href="javascript:void(0);">.</a></li>
+          <li><a href="javascript:void(0);">.</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons"><a href="javascript:void(0);" class="icon-facebook"></a><a href="javascript:void(0);" class="icon-linkedin-sign"></a><a href="javascript:void(0);" class="icon-twitter"></a></div>
+      <div class="copyright">&copy; 2010-2013 Yobi</div>
+      <nav class="nav-subfooter">
+      </nav>
+    </footer>
+
+    <script type="text/javascript" src="/assets/javascripts/lib/jquery/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/jquery/jquery.form.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/jquery/jquery.validate.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/jquery/jquery.zclip.min.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/jquery/jquery.placeholder.min.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/bootstrap-better-typeahead.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/rgbcolor.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/humanize.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/lib/validate.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.Pagination.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.Markdown.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.FileUploader.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.FileDownloader.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.Label.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.ShortcutKey.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.ui.Dropdown.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.ui.Typeahead.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.ui.Dialog.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.ui.Toast.js"></script>
+    <script type="text/javascript" src="/assets/javascripts/common/hive.ui.Tabs.js"></script>
+
+  </body>
+</html>

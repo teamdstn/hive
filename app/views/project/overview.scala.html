@@ -33,8 +33,11 @@
 @makeHistoryWhat(history:History) = {@Messages("project.history.type." + history.getWhat())}
 
 @main(message, project, utils.MenuType.PROJECT_HOME) {
+
+@prjmenu(project, utils.MenuType.PROJECT_HOME, "")
+
 <div class="page">
-	@prjmenu(project, utils.MenuType.PROJECT_HOME, "")
+
 
     <div class="row-fluid">
         <div class="span9">
@@ -100,7 +103,7 @@
         </div>
 
         <div class="span3">
-		    <div class="bubble-wrap gray project-home" style="width:260px;">		        
+		    <div class="bubble-wrap gray project-home" style="width:260px;">
 		        <div class="inner logo" style="background-image:url('@projectLogoImage');">
 		            @if(isAllowed(UserApp.currentUser(), project.labelsAsResource(), Operation.UPDATE)){
 		            <div class="edit">

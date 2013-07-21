@@ -1,12 +1,45 @@
 @(message:String, userForm:Form[User]) @home(message, utils.MenuType.NONE) {
 
 <div class="page full">
+    <div class="ribbon-form">
+      <div class="ribbon"></div>
+      <div class="outer">
+        <div class="title-area">Login <span class="logo-font">yobi</span></div>
+        <h1>Let's get started.</h1>
+        <p>This will be an amazing experience</p>
+        <form action="@routes.UserApp.login()" method="POST">
+          <div class="input-area">
+            <div class="blockinput">
+              <label class="icon-user" for="loginId">@Messages("user.loginId")</label>
+              <input id="loginId" name="loginId" type="text" autocomplete="off" placeholder="Login ID">
+            </div>
+
+            <div class="blockinput">
+              <label class="icon-lock" for="password">@Messages("user.password")</label>
+              <input id="password" name="password" type="password" autocomplete="off" placeholder="Password">
+            </div>
+          </div>
+          <div class="act-row right-txt">
+            <input id="remember-me" type="checkbox" name="rememberMe" class="checkbox" autocomplete="off"><!--
+            --><label for="remember-me" class="bg-checkbox">@Messages("title.rememberMe")</label>
+            <a href="/lostPassword" class="forgot-password"><span>@Messages("title.forgotpassword")</span></a>
+          </div>
+          <button>@Messages("button.login")</button>
+        </form>
+      </div>
+    </div>
+
+
+
+
+  @**
 	<div class="center-wrap tag-line-wrap login">
 		<h1 class="title">
 			<span class="high-light">Log In for</span> HIVE
 		</h1>
 		<p class="tag-line">Software development platform for Open Source project.</p>
 	</div>
+
 	<div class="login-form-wrap frm-wrap">
 		<form action="@routes.UserApp.login()" method="POST">
 			<dl>
@@ -26,10 +59,10 @@
 			</dl>
 
 			<div class="act-row right-txt">
-				<input id="remember-me" type="checkbox" name="rememberMe" class="checkbox" autocomplete="off"><!-- 
+				<input id="remember-me" type="checkbox" name="rememberMe" class="checkbox" autocomplete="off"><!--
 			 --><label for="remember-me" class="bg-checkbox">@Messages("title.rememberMe")</label>
-			  
-			 	<a href="@routes.PasswordResetApp.lostPassword()" class="forgot-password"> 
+
+			 	<a href="@routes.PasswordResetApp.lostPassword()" class="forgot-password">
 					<span class="label">@Messages("title.forgotpassword")</span>
 			 	</a>
 			</div>
@@ -42,6 +75,8 @@
 			</div>
 		</form>
 	</div>
+  **@
 </div>
 
 }
+

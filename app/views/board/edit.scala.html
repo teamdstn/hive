@@ -5,8 +5,9 @@
 @implicitField = @{ helper.FieldConstructor(simpleForm) }
 
 @main(title, project, utils.MenuType.BOARD) {
+@prjmenu(project, utils.MenuType.BOARD, "main-menu-only")
 <div class="page">
-	@prjmenu(project, utils.MenuType.BOARD, "main-menu-only")
+
 
 	<form action="@routes.BoardApp.editPost(project.owner, project.name, number)" method="post" enctype="multipart/form-data" class="nm">
 	<div class="content-wrap frm-wrap">
