@@ -546,7 +546,7 @@ button.button::-moz-focus-inner {
 }
 
 
-.has-session .header .brands .logo:after {
+.has-session .header .brands .logo:after, .has-project .header .brands .logo:after {
 	content: "/";
 }
 
