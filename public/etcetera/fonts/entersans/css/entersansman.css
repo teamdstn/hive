@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'EnterSansman';
+  src: url('../font/entsans-webfont.eot');
+  src: url('../font/entsans-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../font/entsans-webfont.woff') format('woff'),
+       url('../font/entsans-webfont.ttf') format('truetype'),
+       url('../font/entsans-webfont.svg#enter_sansmanbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
